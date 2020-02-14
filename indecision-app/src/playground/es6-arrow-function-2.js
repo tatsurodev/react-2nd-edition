@@ -1,19 +1,15 @@
-'use strict';
-
 // arrow functionでは、arguments objectにaccessできない
-var add = function add(a, b) {
+const add = (a, b) => {
   // console.log(arguments)
-  return a + b;
-};
-console.log(add(55, 1));
+  return a + b
+}
+console.log(add(55, 1))
 
 // this keyword
-var user = {
+const user = {
   name: 'Andrew',
   cities: ['Philadelphia', 'New York', 'Dublin'],
-  printPlacesLived: function printPlacesLived() {
-    var _this = this;
-
+  printPlacesLived() {
     // このmethodのthisはuser objectを指す
     // console.log(this.name)
     // console.log(this.cities)
@@ -24,22 +20,17 @@ var user = {
     //   console.log(this.name + ' has lived in ' + city)
     // })
     // mapは写像、forEachは何も返さない
-    return this.cities.map(function (city) {
-      return _this.name + ' has lived in ' + city;
-    });
-  }
-};
-console.log(user.printPlacesLived());
+    return this.cities.map(city => this.name + ' has lived in ' + city)
 
-var multiplier = {
+  }
+}
+console.log(user.printPlacesLived())
+
+const multiplier = {
   numbers: [10, 20, 30],
   multiplyBy: 3,
-  multiply: function multiply() {
-    var _this2 = this;
-
-    return this.numbers.map(function (number) {
-      return number * _this2.multiplyBy;
-    });
+  multiply() {
+    return this.numbers.map(number => number * this.multiplyBy)
   }
-};
-console.log(multiplier.multiply());
+}
+console.log(multiplier.multiply())
