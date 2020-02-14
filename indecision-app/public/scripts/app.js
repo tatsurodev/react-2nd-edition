@@ -1,78 +1,22 @@
 'use strict';
 
-console.log('App.js is running!');
-
-var app = {
-  title: 'Indecision App',
-  subtitle: 'Put your life in the hands of a computer',
-  options: ['One', 'Two']
-};
-var template = React.createElement(
-  'div',
-  null,
-  React.createElement(
-    'h1',
-    null,
-    app.title
-  ),
-  app.subtitle && React.createElement(
-    'p',
-    null,
-    app.subtitle
-  ),
-  React.createElement(
-    'p',
-    null,
-    app.options.length > 0 ? "Here are your options" : "No options"
-  ),
-  React.createElement(
-    'ol',
-    null,
-    React.createElement(
-      'li',
-      null,
-      'Item one'
-    ),
-    React.createElement(
-      'li',
-      null,
-      'Item two'
-    )
-  )
-);
-
-var user = {
-  name: 'Andrew',
-  age: 26,
-  location: 'Philadelphia'
-};
-function getLocation(location) {
-  if (location) {
-    return React.createElement(
-      'p',
-      null,
-      'Location: ',
-      location
-    );
-  }
+function square(x) {
+  return x * x;
 }
-var templateTwo = React.createElement(
-  'div',
-  null,
-  React.createElement(
-    'h1',
-    null,
-    user.name ? user.name : 'Anonymous'
-  ),
-  user.age && user.age >= 18 && React.createElement(
-    'p',
-    null,
-    'Age: ',
-    user.age
-  ),
-  getLocation(user.location)
-);
+console.log(square(3));
 
-var appRoot = document.getElementById('app');
+// const squareArrow = (x) => {
+//   return x * x
+// }
+var squareArrow = function squareArrow(x) {
+  return x * x;
+};
+console.log(squareArrow(8));
 
-ReactDOM.render(template, appRoot);
+// const getFirstName = (fullName) => {
+//   return fullName.split(' ')[0]
+// }
+var getFirstName = function getFirstName(fullName) {
+  return fullName.split(' ')[0];
+};
+console.log(getFirstName('Mike Smith'));
