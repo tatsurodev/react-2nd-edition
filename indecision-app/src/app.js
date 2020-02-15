@@ -21,6 +21,12 @@ const onRemoveAll = (e) => {
   render()
 }
 
+const onMakeDecision = (e) => {
+  const randomNum = Math.floor(Math.random() * app.options.length)
+  const option = app.options[randomNum]
+  alert(option)
+}
+
 const appRoot = document.getElementById('app')
 
 // jsx supports number, string, boolean, array, null, undefined, but not object
@@ -32,7 +38,7 @@ const render = () => {
       {app.subtitle && <p>{app.subtitle}</p>}
       {/* ternary operator */}
       <p>{app.options.length > 0 ? "Here are your options" : "No options"}</p>
-      <p>{app.options.length}</p>
+      <button onClick={onMakeDecision} disabled={app.options.length === 0}>What should I do?</button>
       <button onClick={onRemoveAll}>Remove All</button>
       <ol>
         {
