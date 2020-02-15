@@ -23,6 +23,7 @@ const onRemoveAll = (e) => {
 
 const appRoot = document.getElementById('app')
 
+// jsx supports number, string, boolean, array, null, undefined, but not object
 const render = () => {
   const template = (
     <div>
@@ -34,8 +35,9 @@ const render = () => {
       <p>{app.options.length}</p>
       <button onClick={onRemoveAll}>Remove All</button>
       <ol>
-        <li>Item one</li>
-        <li>Item two</li>
+        {
+          app.options.map(option => <li key={option}>{option}</li>)
+        }
       </ol>
       <form onSubmit={onFormSubmit}>
         <input type="text" name="option" />

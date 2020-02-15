@@ -25,6 +25,7 @@ var onRemoveAll = function onRemoveAll(e) {
 
 var appRoot = document.getElementById('app');
 
+// jsx supports number, string, boolean, array, null, undefined, but not object
 var render = function render() {
   var template = React.createElement(
     'div',
@@ -57,16 +58,13 @@ var render = function render() {
     React.createElement(
       'ol',
       null,
-      React.createElement(
-        'li',
-        null,
-        'Item one'
-      ),
-      React.createElement(
-        'li',
-        null,
-        'Item two'
-      )
+      app.options.map(function (option) {
+        return React.createElement(
+          'li',
+          { key: option },
+          option
+        );
+      })
     ),
     React.createElement(
       'form',
