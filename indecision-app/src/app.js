@@ -1,3 +1,24 @@
+// const obj = {
+//   name: 'Vikram',
+//   getName() {
+//     return this.name
+//   }
+// }
+
+// 通常のfunction内ではthisは、use strictの時undefined, それ以外の時window objectを指す
+// const func = function () {
+//   console.log(this)
+// }
+// func()
+
+// const getNameは、obj.getNameを参照する只の関数になってしまったのでthis.nameのthisはobjではなく、windowもしくはundefinedとなる。よってgetNameをエラーなく作動させるには、bindでthisを指し示すものを指定するしかない
+// error例
+// const getName = obj.getName
+// console.log(getName())
+// ok例
+// const getName = obj.getName.bind({ name: 'Andrew' })
+// console.log(getName())
+
 class IndecisionApp extends React.Component {
   render() {
     const title = "Indecision"
@@ -44,12 +65,21 @@ class Action extends React.Component {
 }
 
 class Options extends React.Component {
+  // methodのthisを適切にbindするため、constructorでpropsとthisを設定している
+  constructor(props) {
+    super(props)
+    this.handleRemoveAll = this.handleRemoveAll.bind(this)
+  }
+  // methodの中でclass instanceを参照するthisを使用したい時、そのままだとundefined or windowになるのでconstructorでhandleRemoveAllをthisを使えるものでoverride
   handleRemoveAll() {
-    alert('handleRemoveAll')
+    console.log(this.props.options)
+    // alert('handleRemoveAll')
   }
   render() {
     return (
       <div>
+        {/* 毎回bind(this)するのは面倒なのでconstructorでpropertyに指定しておく */}
+        {/* <button onClick={this.handleRemoveAll.bind(this)}>Remove All</button> */}
         <button onClick={this.handleRemoveAll}>Remove All</button>
         {
           this.props.options.map(option => <Option key={option} optionText={option} />)
