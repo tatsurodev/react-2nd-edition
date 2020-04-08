@@ -8,64 +8,27 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Counter = function (_React$Component) {
-  _inherits(Counter, _React$Component);
+var VisibilityToggle = function (_React$Component) {
+  _inherits(VisibilityToggle, _React$Component);
 
-  function Counter(props) {
-    _classCallCheck(this, Counter);
+  function VisibilityToggle(props) {
+    _classCallCheck(this, VisibilityToggle);
 
-    var _this = _possibleConstructorReturn(this, (Counter.__proto__ || Object.getPrototypeOf(Counter)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (VisibilityToggle.__proto__ || Object.getPrototypeOf(VisibilityToggle)).call(this, props));
 
-    _this.handleAddOne = _this.handleAddOne.bind(_this);
-    _this.handleMinusOne = _this.handleMinusOne.bind(_this);
-    _this.handleReset = _this.handleReset.bind(_this);
-    // stateの設定
+    _this.handleToggleVisibility = _this.handleToggleVisibility.bind(_this);
     _this.state = {
-      count: 0
+      visibility: false
     };
     return _this;
   }
 
-  _createClass(Counter, [{
-    key: 'handleAddOne',
-    value: function handleAddOne() {
-      // 直接stateを更新するだけだと値がrerenderされない
-      // this.state.count++
-      // console.log(this.state.count)
-
-      // componentのsetState methodでstateを更新されると自動的に変更が検知されrerenderされる
-      // this.setState((prevState) => {
-      //   return {
-      //     count: prevState.count + 1
-      //   }
-      // })
-    }
-  }, {
-    key: 'handleMinusOne',
-    value: function handleMinusOne() {
-      // ({ count: prevState.count -1 })のように外に()が付けないといけない理由は、()を付けないと{}だけとなりobjectを返しているという意味ではなく複数行に渡る処理の時に使用する{}の意味になってしまうため
+  _createClass(VisibilityToggle, [{
+    key: 'handleToggleVisibility',
+    value: function handleToggleVisibility() {
       this.setState(function (prevState) {
-        return { count: prevState.count - 1 };
+        return { visibility: !prevState.visibility };
       });
-    }
-  }, {
-    key: 'handleReset',
-    value: function handleReset() {
-      this.setState(function () {
-        return { count: 0 };
-      });
-
-      // setStateにfunctionを渡す場合、上から下へ同期的に処理され、countが2度更新されているのでまとめて最後のcount値だけがreactにより表示される。下記の例ではcount: 1になる。基本的に、setStateの引数にはfunctionを指定するほうがbetter
-      // this.setState(() => ({ count: 0 }))
-      // this.setState(prevState => ({ count: prevState.count + 1 }))
-
-      // setStateにobjectを渡す場合、stateは非同期的に更新される。下記の例ではcount: 1にはならず、元のcountの値に+1した値になる。objectを渡す場合は、前のstate値に基づいて更新しない時に使うと良い。
-      // this.setState({
-      //   count: 0
-      // })
-      // this.setState({
-      //   count: this.state.count + 1
-      // })
     }
   }, {
     key: 'render',
@@ -76,57 +39,27 @@ var Counter = function (_React$Component) {
         React.createElement(
           'h1',
           null,
-          'Count: ',
-          this.state.count
+          'Visibility Toggle'
         ),
         React.createElement(
           'button',
-          { onClick: this.handleAddOne },
-          '+1'
+          { onClick: this.handleToggleVisibility },
+          this.state.visibility ? 'Hide details' : 'Show details'
         ),
-        React.createElement(
-          'button',
-          { onClick: this.handleMinusOne },
-          '-1'
-        ),
-        React.createElement(
-          'button',
-          { onClick: this.handleReset },
-          'reset'
+        this.state.visibility && React.createElement(
+          'div',
+          null,
+          React.createElement(
+            'p',
+            null,
+            'Hey. These are some details you can now see!'
+          )
         )
       );
     }
   }]);
 
-  return Counter;
+  return VisibilityToggle;
 }(React.Component);
 
-ReactDOM.render(React.createElement(Counter, null), document.getElementById('app'));
-
-// let count = 0
-// const addOne = () => {
-//   count++
-//   renderCounterApp()
-// }
-// const minusOne = () => {
-//   count--
-//   renderCounterApp()
-// }
-// const reset = () => {
-//   count = 0
-//   renderCounterApp()
-// }
-
-
-// const renderCounterApp = () => {
-//   const templateTwo = (
-//     <div>
-//       <h1>Count: {count}</h1>
-//       <button onClick={addOne}>+1</button>
-//       <button onClick={minusOne}>-1</button>
-//       <button onClick={reset}>reset</button>
-//     </div>
-//   )
-//   ReactDOM.render(templateTwo, appRoot)
-// }
-// renderCounterApp()
+ReactDOM.render(React.createElement(VisibilityToggle, null), document.getElementById('app'));
