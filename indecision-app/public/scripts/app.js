@@ -19,23 +19,41 @@ var Counter = function (_React$Component) {
     _this.handleAddOne = _this.handleAddOne.bind(_this);
     _this.handleMinusOne = _this.handleMinusOne.bind(_this);
     _this.handleReset = _this.handleReset.bind(_this);
+    // stateの設定
+    _this.state = {
+      count: 0
+    };
     return _this;
   }
 
   _createClass(Counter, [{
     key: 'handleAddOne',
     value: function handleAddOne() {
-      console.log('handleAddOne');
+      // 直接stateを更新するだけだと値がrerenderされない
+      // this.state.count++
+      // console.log(this.state.count)
+
+      // componentのsetState methodでstateを更新されると自動的に変更が検知されrerenderされる
+      // this.setState((prevState) => {
+      //   return {
+      //     count: prevState.count + 1
+      //   }
+      // })
     }
   }, {
     key: 'handleMinusOne',
     value: function handleMinusOne() {
-      console.log('handleMinusOne');
+      // ({ count: prevState.count -1 })のように外に()が付けないといけない理由は、()を付けないと{}だけとなりobjectを返しているという意味ではなく複数行に渡る処理の時に使用する{}の意味になってしまうため
+      this.setState(function (prevState) {
+        return { count: prevState.count - 1 };
+      });
     }
   }, {
     key: 'handleReset',
     value: function handleReset() {
-      console.log('handleReset');
+      this.setState(function () {
+        return { count: 0 };
+      });
     }
   }, {
     key: 'render',
@@ -46,7 +64,8 @@ var Counter = function (_React$Component) {
         React.createElement(
           'h1',
           null,
-          'Count: 123'
+          'Count: ',
+          this.state.count
         ),
         React.createElement(
           'button',
