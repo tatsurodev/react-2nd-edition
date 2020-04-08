@@ -54,6 +54,18 @@ var Counter = function (_React$Component) {
       this.setState(function () {
         return { count: 0 };
       });
+
+      // setStateにfunctionを渡す場合、上から下へ同期的に処理され、countが2度更新されているのでまとめて最後のcount値だけがreactにより表示される。下記の例ではcount: 1になる。基本的に、setStateの引数にはfunctionを指定するほうがbetter
+      // this.setState(() => ({ count: 0 }))
+      // this.setState(prevState => ({ count: prevState.count + 1 }))
+
+      // setStateにobjectを渡す場合、stateは非同期的に更新される。下記の例ではcount: 1にはならず、元のcountの値に+1した値になる。objectを渡す場合は、前のstate値に基づいて更新しない時に使うと良い。
+      // this.setState({
+      //   count: 0
+      // })
+      // this.setState({
+      //   count: this.state.count + 1
+      // })
     }
   }, {
     key: 'render',
