@@ -20,16 +20,43 @@
 // console.log(getName())
 
 class IndecisionApp extends React.Component {
+  constructor(props) {
+    super(props)
+    this.handleDeleteOptions = this.handleDeleteOptions.bind(this)
+    this.handlePick = this.handlePick.bind(this)
+    this.state = {
+      options: ['Thing one', 'Thing two', 'Thing three']
+    }
+  }
+  // 親のstateを子要素から変更させる必要があるので、propsとしてstateを変更するfunctionを渡す
+  handleDeleteOptions() {
+    this.setState(() => {
+      return {
+        options: []
+      }
+    })
+  }
+  handlePick() {
+    const randomNum = Math.floor(Math.random() * this.state.options.length)
+    const option = this.state.options[Math.floor(randomNum)]
+    alert(option)
+  }
   render() {
     const title = "Indecision"
     const subtitle = "Put your life in the hands of a computer"
-    const options = ['Thing one', 'Thing two', 'Thing three']
 
     return (
       <div>
         <Header title={title} subtitle={subtitle} />
-        <Action />
-        <Options options={options} />
+        <Action
+          hasOptions={this.state.options.length > 0}
+          handlePick={this.handlePick}
+        />
+        <Options
+          options={this.state.options}
+          // 親要素のstateを変更するhandleDeleteOptions functionを子要素にpropsとして渡す
+          handleDeleteOptions={this.handleDeleteOptions}
+        />
         <AddOption />
       </div>
     )
@@ -51,14 +78,16 @@ class Header extends React.Component {
 }
 
 class Action extends React.Component {
-  handlePick() {
-    alert('handlePick')
-  }
   render() {
     return (
       <div>
         {/* eventですぐにfunctionをcallしたいわけではないので、括弧を付けずに括弧なしのreferenceをセットする */}
-        <button onClick={this.handlePick}>What should I do?</button>
+        <button
+          onClick={this.props.handlePick}
+          disabled={!this.props.hasOptions}
+        >
+          What should I do?
+        </button>
       </div >
     )
   }
@@ -66,21 +95,22 @@ class Action extends React.Component {
 
 class Options extends React.Component {
   // methodのthisを適切にbindするため、constructorでpropsとthisを設定している
-  constructor(props) {
-    super(props)
-    this.handleRemoveAll = this.handleRemoveAll.bind(this)
-  }
+  // constructor(props) {
+  //   super(props)
+  //   this.handleRemoveAll = this.handleRemoveAll.bind(this)
+  // }
   // methodの中でclass instanceを参照するthisを使用したい時、そのままだとundefined or windowになるのでconstructorでhandleRemoveAllをthisを使えるものでoverride
-  handleRemoveAll() {
-    console.log(this.props.options)
-    // alert('handleRemoveAll')
-  }
+  // handleRemoveAll() {
+  //   console.log(this.props.options)
+  //   // alert('handleRemoveAll')
+  // }
   render() {
     return (
       <div>
         {/* 毎回bind(this)するのは面倒なのでconstructorでpropertyに指定しておく */}
         {/* <button onClick={this.handleRemoveAll.bind(this)}>Remove All</button> */}
-        <button onClick={this.handleRemoveAll}>Remove All</button>
+        {/* propsとして親から渡されたfunctionを実行、親stateを更新する */}
+        <button onClick={this.props.handleDeleteOptions}>Remove All</button>
         {
           this.props.options.map(option => <Option key={option} optionText={option} />)
         }
