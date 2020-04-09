@@ -80,70 +80,38 @@ class IndecisionApp extends React.Component {
 }
 
 // componentの作成
-class Header extends React.Component {
-  // render methodでjsxを返す
-  render() {
-    return (
-      <div>
-        {/* propsにaccess */}
-        <h1>{this.props.title}</h1>
-        <h2>{this.props.subtitle}</h2>
-      </div>
-    )
-  }
-}
+const Header = (props) => (
+  <div>
+    {/* propsにaccess */}
+    <h1>{props.title}</h1>
+    <h2>{props.subtitle}</h2>
+  </div>
+)
 
-class Action extends React.Component {
-  render() {
-    return (
-      <div>
-        {/* eventですぐにfunctionをcallしたいわけではないので、括弧を付けずに括弧なしのreferenceをセットする */}
-        <button
-          onClick={this.props.handlePick}
-          disabled={!this.props.hasOptions}
-        >
-          What should I do?
+const Action = (props) => (
+  <div>
+    {/* eventですぐにfunctionをcallしたいわけではないので、括弧を付けずに括弧なしのreferenceをセットする */}
+    <button
+      onClick={props.handlePick}
+      disabled={!props.hasOptions}
+    >
+      What should I do?
         </button>
-      </div >
-    )
-  }
-}
+  </div >
+)
 
-class Options extends React.Component {
-  // methodのthisを適切にbindするため、constructorでpropsとthisを設定している
-  // constructor(props) {
-  //   super(props)
-  //   this.handleRemoveAll = this.handleRemoveAll.bind(this)
-  // }
-  // methodの中でclass instanceを参照するthisを使用したい時、そのままだとundefined or windowになるのでconstructorでhandleRemoveAllをthisを使えるものでoverride
-  // handleRemoveAll() {
-  //   console.log(this.props.options)
-  //   // alert('handleRemoveAll')
-  // }
-  render() {
-    return (
-      <div>
-        {/* 毎回bind(this)するのは面倒なのでconstructorでpropertyに指定しておく */}
-        {/* <button onClick={this.handleRemoveAll.bind(this)}>Remove All</button> */}
-        {/* propsとして親から渡されたfunctionを実行、親stateを更新する */}
-        <button onClick={this.props.handleDeleteOptions}>Remove All</button>
-        {
-          this.props.options.map(option => <Option key={option} optionText={option} />)
-        }
-        {/* 上下は同値 */}
-        {/* <Option></Option> */}
-      </div>
-    )
-  }
-}
+const Options = (props) => (
+  <div>
+    <button onClick={props.handleDeleteOptions}>Remove All</button>
+    {
+      props.options.map(option => <Option key={option} optionText={option} />)
+    }
+  </div>
+)
 
-class Option extends React.Component {
-  render() {
-    return (
-      <div>Option: {this.props.optionText}</div>
-    )
-  }
-}
+const Option = (props) => (
+  <div>Option: {props.optionText}</div>
+)
 
 class AddOption extends React.Component {
   constructor(props) {
@@ -177,5 +145,16 @@ class AddOption extends React.Component {
     )
   }
 }
+
+// stateless functional componentの定義
+// const User = (props) => {
+//   return (
+//     <div>
+//       {/* stateless functional componentはarrow functionで定義されており、thisが使えない点に注意。arrow functionの第一引数にはpropsを受け取れる */}
+//       <p>Name: {props.name}</p>
+//       <p>Age: {props.age}</p>
+//     </div>
+//   )
+// }
 
 ReactDOM.render(<IndecisionApp />, document.getElementById('app'))
