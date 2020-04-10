@@ -46,10 +46,27 @@ var IndecisionApp = function (_React$Component) {
     };
     return _this;
   }
-  // 親のstateを子要素から変更させる必要があるので、propsとしてstateを変更するfunctionを渡す
+  // lifecycle methodはclass base componentのみ、stateless functional componentにはない機能
 
 
   _createClass(IndecisionApp, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      console.log('componentDidMount!');
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prevProps, prevState) {
+      console.log('componentDidUpdate!');
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      console.log('componentWillUnmount!');
+    }
+    // 親のstateを子要素から変更させる必要があるので、propsとしてstateを変更するfunctionを渡す
+
+  }, {
     key: 'handleDeleteOptions',
     value: function handleDeleteOptions() {
       this.setState(function () {

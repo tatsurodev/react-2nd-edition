@@ -30,6 +30,16 @@ class IndecisionApp extends React.Component {
       options: props.options
     }
   }
+  // lifecycle methodはclass base componentのみ、stateless functional componentにはない機能
+  componentDidMount() {
+    console.log('componentDidMount!')
+  }
+  componentDidUpdate(prevProps, prevState) {
+    console.log('componentDidUpdate!')
+  }
+  componentWillUnmount() {
+    console.log('componentWillUnmount!')
+  }
   // 親のstateを子要素から変更させる必要があるので、propsとしてstateを変更するfunctionを渡す
   handleDeleteOptions() {
     this.setState(() => ({ options: [] }))
