@@ -6,7 +6,7 @@ class Counter extends React.Component {
     this.handleReset = this.handleReset.bind(this)
     // stateの設定
     this.state = {
-      count: 0,
+      count: props.count,
     }
   }
   handleAddOne() {
@@ -15,11 +15,11 @@ class Counter extends React.Component {
     // console.log(this.state.count)
 
     // componentのsetState methodでstateを更新されると自動的に変更が検知されrerenderされる
-    // this.setState((prevState) => {
-    //   return {
-    //     count: prevState.count + 1
-    //   }
-    // })
+    this.setState((prevState) => {
+      return {
+        count: prevState.count + 1
+      }
+    })
   }
   handleMinusOne() {
     // ({ count: prevState.count -1 })のように外に()が付けないといけない理由は、()を付けないと{}だけとなりobjectを返しているという意味ではなく複数行に渡る処理の時に使用する{}の意味になってしまうため
@@ -51,8 +51,11 @@ class Counter extends React.Component {
     )
   }
 }
+Counter.defaultProps = {
+  count: 0,
+}
 
-ReactDOM.render(<Counter />, document.getElementById('app'))
+ReactDOM.render(<Counter count={-10} />, document.getElementById('app'))
 
 // let count = 0
 // const addOne = () => {

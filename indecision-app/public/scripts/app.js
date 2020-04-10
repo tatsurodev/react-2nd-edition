@@ -8,193 +8,64 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-// const obj = {
-//   name: 'Vikram',
-//   getName() {
-//     return this.name
-//   }
-// }
+var Counter = function (_React$Component) {
+  _inherits(Counter, _React$Component);
 
-// 通常のfunction内ではthisは、use strictの時undefined, それ以外の時window objectを指す
-// const func = function () {
-//   console.log(this)
-// }
-// func()
+  function Counter(props) {
+    _classCallCheck(this, Counter);
 
-// const getNameは、obj.getNameを参照する只の関数になってしまったのでthis.nameのthisはobjではなく、windowもしくはundefinedとなる。よってgetNameをエラーなく作動させるには、bindでthisを指し示すものを指定するしかない
-// error例
-// const getName = obj.getName
-// console.log(getName())
-// ok例
-// const getName = obj.getName.bind({ name: 'Andrew' })
-// console.log(getName())
+    var _this = _possibleConstructorReturn(this, (Counter.__proto__ || Object.getPrototypeOf(Counter)).call(this, props));
 
-var IndecisionApp = function (_React$Component) {
-  _inherits(IndecisionApp, _React$Component);
-
-  function IndecisionApp(props) {
-    _classCallCheck(this, IndecisionApp);
-
-    var _this = _possibleConstructorReturn(this, (IndecisionApp.__proto__ || Object.getPrototypeOf(IndecisionApp)).call(this, props));
-
-    _this.handleDeleteOptions = _this.handleDeleteOptions.bind(_this);
-    _this.handlePick = _this.handlePick.bind(_this);
-    _this.handleAddOption = _this.handleAddOption.bind(_this);
+    _this.handleAddOne = _this.handleAddOne.bind(_this);
+    _this.handleMinusOne = _this.handleMinusOne.bind(_this);
+    _this.handleReset = _this.handleReset.bind(_this);
+    // stateの設定
     _this.state = {
-      options: []
+      count: props.count
     };
     return _this;
   }
-  // 親のstateを子要素から変更させる必要があるので、propsとしてstateを変更するfunctionを渡す
 
+  _createClass(Counter, [{
+    key: 'handleAddOne',
+    value: function handleAddOne() {
+      // 直接stateを更新するだけだと値がrerenderされない
+      // this.state.count++
+      // console.log(this.state.count)
 
-  _createClass(IndecisionApp, [{
-    key: 'handleDeleteOptions',
-    value: function handleDeleteOptions() {
-      this.setState(function () {
-        return {
-          options: []
-        };
-      });
-    }
-  }, {
-    key: 'handlePick',
-    value: function handlePick() {
-      var randomNum = Math.floor(Math.random() * this.state.options.length);
-      var option = this.state.options[Math.floor(randomNum)];
-      alert(option);
-    }
-  }, {
-    key: 'handleAddOption',
-    value: function handleAddOption(option) {
-      if (!option) {
-        return 'Enter valid value to add item';
-      } else if (this.state.options.indexOf(option) > -1) {
-        return 'This option already exists';
-      }
+      // componentのsetState methodでstateを更新されると自動的に変更が検知されrerenderされる
       this.setState(function (prevState) {
         return {
-          // pushは破壊的なのでprevStateで使わない
-          options: prevState.options.concat([option])
+          count: prevState.count + 1
         };
       });
     }
   }, {
-    key: 'render',
-    value: function render() {
-      var title = "Indecision";
-      var subtitle = "Put your life in the hands of a computer";
-
-      return React.createElement(
-        'div',
-        null,
-        React.createElement(Header, { title: title, subtitle: subtitle }),
-        React.createElement(Action, {
-          hasOptions: this.state.options.length > 0,
-          handlePick: this.handlePick
-        }),
-        React.createElement(Options, {
-          options: this.state.options
-          // 親要素のstateを変更するhandleDeleteOptions functionを子要素にpropsとして渡す
-          , handleDeleteOptions: this.handleDeleteOptions
-        }),
-        React.createElement(AddOption, {
-          handleAddOption: this.handleAddOption
-        })
-      );
+    key: 'handleMinusOne',
+    value: function handleMinusOne() {
+      // ({ count: prevState.count -1 })のように外に()が付けないといけない理由は、()を付けないと{}だけとなりobjectを返しているという意味ではなく複数行に渡る処理の時に使用する{}の意味になってしまうため
+      this.setState(function (prevState) {
+        return { count: prevState.count - 1 };
+      });
     }
-  }]);
-
-  return IndecisionApp;
-}(React.Component);
-
-// componentの作成
-
-
-var Header = function Header(props) {
-  return React.createElement(
-    'div',
-    null,
-    React.createElement(
-      'h1',
-      null,
-      props.title
-    ),
-    React.createElement(
-      'h2',
-      null,
-      props.subtitle
-    )
-  );
-};
-
-var Action = function Action(props) {
-  return React.createElement(
-    'div',
-    null,
-    React.createElement(
-      'button',
-      {
-        onClick: props.handlePick,
-        disabled: !props.hasOptions
-      },
-      'What should I do?'
-    )
-  );
-};
-
-var Options = function Options(props) {
-  return React.createElement(
-    'div',
-    null,
-    React.createElement(
-      'button',
-      { onClick: props.handleDeleteOptions },
-      'Remove All'
-    ),
-    props.options.map(function (option) {
-      return React.createElement(Option, { key: option, optionText: option });
-    })
-  );
-};
-
-var Option = function Option(props) {
-  return React.createElement(
-    'div',
-    null,
-    'Option: ',
-    props.optionText
-  );
-};
-
-var AddOption = function (_React$Component2) {
-  _inherits(AddOption, _React$Component2);
-
-  function AddOption(props) {
-    _classCallCheck(this, AddOption);
-
-    var _this2 = _possibleConstructorReturn(this, (AddOption.__proto__ || Object.getPrototypeOf(AddOption)).call(this, props));
-
-    _this2.handleAddOption = _this2.handleAddOption.bind(_this2);
-    _this2.state = {
-      error: undefined
-    };
-    return _this2;
-  }
-
-  _createClass(AddOption, [{
-    key: 'handleAddOption',
-    value: function handleAddOption(e) {
-      e.preventDefault();
-      var option = e.target.elements.option.value.trim();
-      var error = this.props.handleAddOption(option);
-
+  }, {
+    key: 'handleReset',
+    value: function handleReset() {
       this.setState(function () {
-        return {
-          // error: error
-          error: error
-        };
+        return { count: 0 };
       });
+
+      // setStateにfunctionを渡す場合、上から下へ同期的に処理され、countが2度更新されているのでまとめて最後のcount値だけがreactにより表示される。下記の例ではcount: 1になる。基本的に、setStateの引数にはfunctionを指定するほうがbetter
+      // this.setState(() => ({ count: 0 }))
+      // this.setState(prevState => ({ count: prevState.count + 1 }))
+
+      // setStateにobjectを渡す場合、stateは非同期的に更新される。下記の例ではcount: 1にはならず、元のcountの値に+1した値になる。objectを渡す場合は、前のstate値に基づいて更新しない時に使うと良い。
+      // this.setState({
+      //   count: 0
+      // })
+      // this.setState({
+      //   count: this.state.count + 1
+      // })
     }
   }, {
     key: 'render',
@@ -202,37 +73,64 @@ var AddOption = function (_React$Component2) {
       return React.createElement(
         'div',
         null,
-        this.state.error && React.createElement(
-          'p',
+        React.createElement(
+          'h1',
           null,
-          this.state.error
+          'Count: ',
+          this.state.count
         ),
         React.createElement(
-          'form',
-          { onSubmit: this.handleAddOption },
-          React.createElement('input', { type: 'text', name: 'option' }),
-          React.createElement(
-            'button',
-            null,
-            'Add Option'
-          )
+          'button',
+          { onClick: this.handleAddOne },
+          '+1'
+        ),
+        React.createElement(
+          'button',
+          { onClick: this.handleMinusOne },
+          '-1'
+        ),
+        React.createElement(
+          'button',
+          { onClick: this.handleReset },
+          'reset'
         )
       );
     }
   }]);
 
-  return AddOption;
+  return Counter;
 }(React.Component);
 
-// stateless functional componentの定義
-// const User = (props) => {
-//   return (
-//     <div>
-//       {/* stateless functional componentはarrow functionで定義されており、thisが使えない点に注意。arrow functionの第一引数にはpropsを受け取れる */}
-//       <p>Name: {props.name}</p>
-//       <p>Age: {props.age}</p>
-//     </div>
-//   )
+Counter.defaultProps = {
+  count: 0
+};
+
+ReactDOM.render(React.createElement(Counter, { count: -10 }), document.getElementById('app'));
+
+// let count = 0
+// const addOne = () => {
+//   count++
+//   renderCounterApp()
+// }
+// const minusOne = () => {
+//   count--
+//   renderCounterApp()
+// }
+// const reset = () => {
+//   count = 0
+//   renderCounterApp()
 // }
 
-ReactDOM.render(React.createElement(IndecisionApp, null), document.getElementById('app'));
+
+// const renderCounterApp = () => {
+//   const templateTwo = (
+//     <div>
+//       <h1>Count: {count}</h1>
+//       <button onClick={addOne}>+1</button>
+//       <button onClick={minusOne}>-1</button>
+//       <button onClick={reset}>reset</button>
+//     </div>
+//   )
+//   ReactDOM.render(templateTwo, appRoot)
+// }
+// renderCounterApp()
