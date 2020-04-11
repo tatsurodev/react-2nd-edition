@@ -42,7 +42,7 @@ var IndecisionApp = function (_React$Component) {
     _this.handleAddOption = _this.handleAddOption.bind(_this);
     _this.handleDeleteOption = _this.handleDeleteOption.bind(_this);
     _this.state = {
-      options: props.options
+      options: []
     };
     return _this;
   }
@@ -148,11 +148,10 @@ var IndecisionApp = function (_React$Component) {
   return IndecisionApp;
 }(React.Component);
 
-IndecisionApp.defaultProps = {
-  options: []
+// componentの作成
 
-  // componentの作成
-};var Header = function Header(props) {
+
+var Header = function Header(props) {
   return React.createElement(
     'div',
     null,
