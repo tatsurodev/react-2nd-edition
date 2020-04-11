@@ -32,10 +32,24 @@ class IndecisionApp extends React.Component {
   }
   // lifecycle methodはclass base componentのみ、stateless functional componentにはない機能
   componentDidMount() {
-    console.log('componentDidMount!')
+    // jsonの形式が間違っていたりするとエラーが出るので
+    try {
+      // localStorageに保存したものを取り出すには、string形式のものをparseする
+      const json = localStorage.getItem('options')
+      const options = JSON.parse(json)
+      if (options) {
+        this.setState(() => ({ options }))
+      }
+    } catch (e) {
+      // エラー時は何もしない、つまりdefaultのprops.options = []が使われる
+    }
   }
   componentDidUpdate(prevProps, prevState) {
-    console.log('componentDidUpdate!')
+    if (prevState.options.length !== this.state.options.length) {
+      // localStorageに保存するにはまずstringにしないとダメ
+      const json = JSON.stringify(this.state.options)
+      localStorage.setItem('options', json)
+    }
   }
   componentWillUnmount() {
     console.log('componentWillUnmount!')
@@ -116,6 +130,7 @@ const Action = (props) => (
 const Options = (props) => (
   <div>
     <button onClick={props.handleDeleteOptions}>Remove All</button>
+    {props.options.length === 0 && <p>Please add an option to get started!</p>}
     {
       props.options.map(option => (
         <Option
@@ -159,6 +174,10 @@ class AddOption extends React.Component {
     const error = this.props.handleAddOption(option)
 
     this.setState(() => ({ error }))
+
+    if (!error) {
+      e.target.elements.option.value = ''
+    }
   }
   render() {
     return (
