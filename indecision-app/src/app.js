@@ -25,17 +25,42 @@ class IndecisionApp extends React.Component {
     this.handleDeleteOptions = this.handleDeleteOptions.bind(this)
     this.handlePick = this.handlePick.bind(this)
     this.handleAddOption = this.handleAddOption.bind(this)
+    this.handleDeleteOption = this.handleDeleteOption.bind(this)
     this.state = {
       options: []
     }
   }
+  // lifecycle methodはclass base componentのみ、stateless functional componentにはない機能
+  componentDidMount() {
+    // jsonの形式が間違っていたりするとエラーが出るので
+    try {
+      // localStorageに保存したものを取り出すには、string形式のものをparseする
+      const json = localStorage.getItem('options')
+      const options = JSON.parse(json)
+      if (options) {
+        this.setState(() => ({ options }))
+      }
+    } catch (e) {
+      // エラー時は何もしない、つまりdefaultのprops.options = []が使われる
+    }
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.options.length !== this.state.options.length) {
+      // localStorageに保存するにはまずstringにしないとダメ
+      const json = JSON.stringify(this.state.options)
+      localStorage.setItem('options', json)
+    }
+  }
+  componentWillUnmount() {
+    console.log('componentWillUnmount!')
+  }
   // 親のstateを子要素から変更させる必要があるので、propsとしてstateを変更するfunctionを渡す
   handleDeleteOptions() {
-    this.setState(() => {
-      return {
-        options: []
-      }
-    })
+    this.setState(() => ({ options: [] }))
+  }
+  handleDeleteOption(optionToRemove) {
+    this.setState((prevState) => ({ options: prevState.options.filter((option) => option !== optionToRemove) }))
+    // console.log('hdo', optionToRemove)
   }
   handlePick() {
     const randomNum = Math.floor(Math.random() * this.state.options.length)
@@ -48,20 +73,15 @@ class IndecisionApp extends React.Component {
     } else if (this.state.options.indexOf(option) > -1) {
       return 'This option already exists'
     }
-    this.setState((prevState) => {
-      return {
-        // pushは破壊的なのでprevStateで使わない
-        options: prevState.options.concat([option])
-      }
-    })
+    // pushは破壊的なのでprevStateで使わない
+    this.setState((prevState) => ({ options: prevState.options.concat([option]) }))
   }
   render() {
-    const title = "Indecision"
     const subtitle = "Put your life in the hands of a computer"
 
     return (
       <div>
-        <Header title={title} subtitle={subtitle} />
+        <Header subtitle={subtitle} />
         <Action
           hasOptions={this.state.options.length > 0}
           handlePick={this.handlePick}
@@ -70,6 +90,7 @@ class IndecisionApp extends React.Component {
           options={this.state.options}
           // 親要素のstateを変更するhandleDeleteOptions functionを子要素にpropsとして渡す
           handleDeleteOptions={this.handleDeleteOptions}
+          handleDeleteOption={this.handleDeleteOption}
         />
         <AddOption
           handleAddOption={this.handleAddOption}
@@ -80,70 +101,61 @@ class IndecisionApp extends React.Component {
 }
 
 // componentの作成
-class Header extends React.Component {
-  // render methodでjsxを返す
-  render() {
-    return (
-      <div>
-        {/* propsにaccess */}
-        <h1>{this.props.title}</h1>
-        <h2>{this.props.subtitle}</h2>
-      </div>
-    )
-  }
+const Header = (props) => (
+  <div>
+    {/* propsにaccess */}
+    <h1>{props.title}</h1>
+    {props.subtitle && <h2>{props.subtitle}</h2>}
+  </div>
+)
+Header.defaultProps = {
+  title: 'Indecision'
 }
 
-class Action extends React.Component {
-  render() {
-    return (
-      <div>
-        {/* eventですぐにfunctionをcallしたいわけではないので、括弧を付けずに括弧なしのreferenceをセットする */}
-        <button
-          onClick={this.props.handlePick}
-          disabled={!this.props.hasOptions}
-        >
-          What should I do?
+const Action = (props) => (
+  <div>
+    {/* eventですぐにfunctionをcallしたいわけではないので、括弧を付けずに括弧なしのreferenceをセットする */}
+    <button
+      onClick={props.handlePick}
+      disabled={!props.hasOptions}
+    >
+      What should I do?
         </button>
-      </div >
-    )
-  }
-}
+  </div >
+)
 
-class Options extends React.Component {
-  // methodのthisを適切にbindするため、constructorでpropsとthisを設定している
-  // constructor(props) {
-  //   super(props)
-  //   this.handleRemoveAll = this.handleRemoveAll.bind(this)
-  // }
-  // methodの中でclass instanceを参照するthisを使用したい時、そのままだとundefined or windowになるのでconstructorでhandleRemoveAllをthisを使えるものでoverride
-  // handleRemoveAll() {
-  //   console.log(this.props.options)
-  //   // alert('handleRemoveAll')
-  // }
-  render() {
-    return (
-      <div>
-        {/* 毎回bind(this)するのは面倒なのでconstructorでpropertyに指定しておく */}
-        {/* <button onClick={this.handleRemoveAll.bind(this)}>Remove All</button> */}
-        {/* propsとして親から渡されたfunctionを実行、親stateを更新する */}
-        <button onClick={this.props.handleDeleteOptions}>Remove All</button>
-        {
-          this.props.options.map(option => <Option key={option} optionText={option} />)
+const Options = (props) => (
+  <div>
+    <button onClick={props.handleDeleteOptions}>Remove All</button>
+    {props.options.length === 0 && <p>Please add an option to get started!</p>}
+    {
+      props.options.map(option => (
+        <Option
+          key={option}
+          optionText={option}
+          handleDeleteOption={props.handleDeleteOption}
+        />
+      ))
+    }
+  </div>
+)
+
+const Option = (props) => (
+  <div>
+    {props.optionText}
+    <button
+      // handleDeleteOptionだとeを引数にしてしまうので、無名関数内でhandleDeleteOptionに引数を持たせる
+      // onClick={props.handleDeleteOption}
+      onClick={
+        (e) => {
+          props.handleDeleteOption(props.optionText)
         }
-        {/* 上下は同値 */}
-        {/* <Option></Option> */}
-      </div>
-    )
-  }
-}
-
-class Option extends React.Component {
-  render() {
-    return (
-      <div>Option: {this.props.optionText}</div>
-    )
-  }
-}
+      }
+    >
+      remove
+      </button>
+  </div>
+)
 
 class AddOption extends React.Component {
   constructor(props) {
@@ -158,12 +170,11 @@ class AddOption extends React.Component {
     const option = e.target.elements.option.value.trim()
     const error = this.props.handleAddOption(option)
 
-    this.setState(() => {
-      return {
-        // error: error
-        error
-      }
-    })
+    this.setState(() => ({ error }))
+
+    if (!error) {
+      e.target.elements.option.value = ''
+    }
   }
   render() {
     return (
@@ -178,4 +189,15 @@ class AddOption extends React.Component {
   }
 }
 
-ReactDOM.render(<IndecisionApp />, document.getElementById('app'))
+// stateless functional componentの定義
+// const User = (props) => {
+//   return (
+//     <div>
+//       {/* stateless functional componentはarrow functionで定義されており、thisが使えない点に注意。arrow functionの第一引数にはpropsを受け取れる */}
+//       <p>Name: {props.name}</p>
+//       <p>Age: {props.age}</p>
+//     </div>
+//   )
+// }
+
+ReactDOM.render(<IndecisionApp options={['Devils den', 'Second District']} />, document.getElementById('app'))
