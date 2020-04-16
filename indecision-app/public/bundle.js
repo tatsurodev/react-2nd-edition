@@ -94,7 +94,7 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _person_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./person.js */ \"./src/person.js\");\n// importのみだと該当fileの変数はimportされないようになっている、むやみにimportされるとglobal scopeが汚染されてしまうため\n// import './utils.js'\n// exportと同じくimportする変数を指定\n// import { square, add } from './utils.js'\n\n// console.log('app.js is running')\n// console.log(square(4))\n// console.log(add(100, 23))\n\n\nconsole.log(Object(_person_js__WEBPACK_IMPORTED_MODULE_0__[\"isAdult\"])(18))\nconsole.log(Object(_person_js__WEBPACK_IMPORTED_MODULE_0__[\"canDrink\"])(20))\n\n//# sourceURL=webpack:///./src/app.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _person_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./person.js */ \"./src/person.js\");\n// importのみだと該当fileの変数はimportされないようになっている、むやみにimportされるとglobal scopeが汚染されてしまうため\n// import './utils.js'\n// exportと同じくimportする変数を指定\n// import subtract, { square, add } from './utils.js'\n\n// console.log('app.js is running')\n// console.log(square(4))\n// console.log(add(100, 23))\n// console.log(subtract(100, 81))\n\n\nconsole.log(Object(_person_js__WEBPACK_IMPORTED_MODULE_0__[\"isAdult\"])(18))\nconsole.log(Object(_person_js__WEBPACK_IMPORTED_MODULE_0__[\"canDrink\"])(20))\nconsole.log(Object(_person_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"])(65))\n\n//# sourceURL=webpack:///./src/app.js?");
 
 /***/ }),
 
@@ -102,11 +102,11 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _per
 /*!***********************!*\
   !*** ./src/person.js ***!
   \***********************/
-/*! exports provided: isAdult, canDrink */
+/*! exports provided: isAdult, canDrink, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"isAdult\", function() { return isAdult; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"canDrink\", function() { return canDrink; });\nconst isAdult = (age) => age >= 18\nconst canDrink = (age) => age >= 21\n\n\n\n//# sourceURL=webpack:///./src/person.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"isAdult\", function() { return isAdult; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"canDrink\", function() { return canDrink; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return isSeniorCitizen; });\nconst isAdult = (age) => age >= 18\nconst canDrink = (age) => age >= 21\nconst isSeniorCitizen = (age) => age >= 65\n\n\n\n//# sourceURL=webpack:///./src/person.js?");
 
 /***/ })
 
