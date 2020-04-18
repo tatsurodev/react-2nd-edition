@@ -1,203 +1,36 @@
-// const obj = {
-//   name: 'Vikram',
-//   getName() {
-//     return this.name
-//   }
-// }
+// es6での使用例は、importを使う。from pathではなく、from 'moduleName'を使用すると、node_modules folderをwebpackが自動的に探しだす
+import React from 'react'
+import ReactDOM from 'react-dom'
+import IndecisionApp from './component/IndecisionApp'
 
-// 通常のfunction内ではthisは、use strictの時undefined, それ以外の時window objectを指す
-// const func = function () {
-//   console.log(this)
-// }
-// func()
+ReactDOM.render(<IndecisionApp />, document.getElementById('app'))
 
-// const getNameは、obj.getNameを参照する只の関数になってしまったのでthis.nameのthisはobjではなく、windowもしくはundefinedとなる。よってgetNameをエラーなく作動させるには、bindでthisを指し示すものを指定するしかない
-// error例
-// const getName = obj.getName
-// console.log(getName())
-// ok例
-// const getName = obj.getName.bind({ name: 'Andrew' })
-// console.log(getName())
-
-class IndecisionApp extends React.Component {
-  constructor(props) {
-    super(props)
-    this.handleDeleteOptions = this.handleDeleteOptions.bind(this)
-    this.handlePick = this.handlePick.bind(this)
-    this.handleAddOption = this.handleAddOption.bind(this)
-    this.handleDeleteOption = this.handleDeleteOption.bind(this)
-    this.state = {
-      options: []
-    }
+// class fieldの使い方。react component内のthisをbindする方法を簡潔化できる。es2019でもまだ追加されていないのでbabelのpluginでcompileする必要あり
+// 従来の方法、constructor内でpropertyとmethodのthisをbind
+/*
+class OldSyntax {
+  constructor() {
+    this.name = 'Mike'
+    this.getGreeting = this.getGreeting.bind(this)
   }
-  // lifecycle methodはclass base componentのみ、stateless functional componentにはない機能
-  componentDidMount() {
-    // jsonの形式が間違っていたりするとエラーが出るので
-    try {
-      // localStorageに保存したものを取り出すには、string形式のものをparseする
-      const json = localStorage.getItem('options')
-      const options = JSON.parse(json)
-      if (options) {
-        this.setState(() => ({ options }))
-      }
-    } catch (e) {
-      // エラー時は何もしない、つまりdefaultのprops.options = []が使われる
-    }
-  }
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.options.length !== this.state.options.length) {
-      // localStorageに保存するにはまずstringにしないとダメ
-      const json = JSON.stringify(this.state.options)
-      localStorage.setItem('options', json)
-    }
-  }
-  componentWillUnmount() {
-    console.log('componentWillUnmount!')
-  }
-  // 親のstateを子要素から変更させる必要があるので、propsとしてstateを変更するfunctionを渡す
-  handleDeleteOptions() {
-    this.setState(() => ({ options: [] }))
-  }
-  handleDeleteOption(optionToRemove) {
-    this.setState((prevState) => ({ options: prevState.options.filter((option) => option !== optionToRemove) }))
-    // console.log('hdo', optionToRemove)
-  }
-  handlePick() {
-    const randomNum = Math.floor(Math.random() * this.state.options.length)
-    const option = this.state.options[Math.floor(randomNum)]
-    alert(option)
-  }
-  handleAddOption(option) {
-    if (!option) {
-      return 'Enter valid value to add item'
-    } else if (this.state.options.indexOf(option) > -1) {
-      return 'This option already exists'
-    }
-    // pushは破壊的なのでprevStateで使わない
-    this.setState((prevState) => ({ options: prevState.options.concat([option]) }))
-  }
-  render() {
-    const subtitle = "Put your life in the hands of a computer"
-
-    return (
-      <div>
-        <Header subtitle={subtitle} />
-        <Action
-          hasOptions={this.state.options.length > 0}
-          handlePick={this.handlePick}
-        />
-        <Options
-          options={this.state.options}
-          // 親要素のstateを変更するhandleDeleteOptions functionを子要素にpropsとして渡す
-          handleDeleteOptions={this.handleDeleteOptions}
-          handleDeleteOption={this.handleDeleteOption}
-        />
-        <AddOption
-          handleAddOption={this.handleAddOption}
-        />
-      </div>
-    )
+  getGreeting() {
+    return `Hi. My name is ${this.name}`
   }
 }
-
-// componentの作成
-const Header = (props) => (
-  <div>
-    {/* propsにaccess */}
-    <h1>{props.title}</h1>
-    {props.subtitle && <h2>{props.subtitle}</h2>}
-  </div>
-)
-Header.defaultProps = {
-  title: 'Indecision'
-}
-
-const Action = (props) => (
-  <div>
-    {/* eventですぐにfunctionをcallしたいわけではないので、括弧を付けずに括弧なしのreferenceをセットする */}
-    <button
-      onClick={props.handlePick}
-      disabled={!props.hasOptions}
-    >
-      What should I do?
-        </button>
-  </div >
-)
-
-const Options = (props) => (
-  <div>
-    <button onClick={props.handleDeleteOptions}>Remove All</button>
-    {props.options.length === 0 && <p>Please add an option to get started!</p>}
-    {
-      props.options.map(option => (
-        <Option
-          key={option}
-          optionText={option}
-          handleDeleteOption={props.handleDeleteOption}
-        />
-      ))
-    }
-  </div>
-)
-
-const Option = (props) => (
-  <div>
-    {props.optionText}
-    <button
-      // handleDeleteOptionだとeを引数にしてしまうので、無名関数内でhandleDeleteOptionに引数を持たせる
-      // onClick={props.handleDeleteOption}
-      onClick={
-        (e) => {
-          props.handleDeleteOption(props.optionText)
-        }
-      }
-    >
-      remove
-      </button>
-  </div>
-)
-
-class AddOption extends React.Component {
-  constructor(props) {
-    super(props)
-    this.handleAddOption = this.handleAddOption.bind(this)
-    this.state = {
-      error: undefined
-    }
-  }
-  handleAddOption(e) {
-    e.preventDefault()
-    const option = e.target.elements.option.value.trim()
-    const error = this.props.handleAddOption(option)
-
-    this.setState(() => ({ error }))
-
-    if (!error) {
-      e.target.elements.option.value = ''
-    }
-  }
-  render() {
-    return (
-      <div>
-        {this.state.error && <p>{this.state.error}</p>}
-        <form onSubmit={this.handleAddOption}>
-          <input type="text" name="option" />
-          <button>Add Option</button>
-        </form>
-      </div>
-    )
+const oldSyntax = new OldSyntax()
+const getGreeting = oldSyntax.getGreeting
+console.log(getGreeting())
+*/
+// 新しい方法、class fieldあり
+/*
+class NewSyntax {
+  // 変数のtype指定なしでkeyとvalueの組み合わせを指定するとclass fieldsを設定できる
+  name = 'Jen'
+  getGreeting = () => {
+    return `Hi. My name is ${this.name}`
   }
 }
-
-// stateless functional componentの定義
-// const User = (props) => {
-//   return (
-//     <div>
-//       {/* stateless functional componentはarrow functionで定義されており、thisが使えない点に注意。arrow functionの第一引数にはpropsを受け取れる */}
-//       <p>Name: {props.name}</p>
-//       <p>Age: {props.age}</p>
-//     </div>
-//   )
-// }
-
-ReactDOM.render(<IndecisionApp options={['Devils den', 'Second District']} />, document.getElementById('app'))
+const newSyntax = new NewSyntax()
+const newGetGreeting = newSyntax.getGreeting
+console.log(newGetGreeting())
+*/
