@@ -17,5 +17,7 @@ module.exports = {
       test: /\.js$/,
       exclude: /node_modules/
     }]
-  }
+  },
+  // error時のdebugをしやすくするためにsource mapを指定。bundle.jsが動いている雄一のjs fileだが、cheap-module-eval-source-mapで該当のerrorがどのjs fileで発生しているか、browser側が判断できるようになる
+  devtool: 'cheap-module-eval-source-map'
 }
