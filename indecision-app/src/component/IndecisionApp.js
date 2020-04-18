@@ -5,15 +5,30 @@ import AddOption from './AddOption'
 import Options from './Options'
 
 export default class IndecisionApp extends React.Component {
-  constructor(props) {
-    super(props)
-    this.handleDeleteOptions = this.handleDeleteOptions.bind(this)
-    this.handlePick = this.handlePick.bind(this)
-    this.handleAddOption = this.handleAddOption.bind(this)
-    this.handleDeleteOption = this.handleDeleteOption.bind(this)
-    this.state = {
-      options: []
+  state = {
+    options: []
+  }
+  // 親のstateを子要素から変更させる必要があるので、propsとしてstateを変更するfunctionを渡す
+  handleDeleteOptions = () => {
+    this.setState(() => ({ options: [] }))
+  }
+  handleDeleteOption = (optionToRemove) => {
+    this.setState((prevState) => ({ options: prevState.options.filter((option) => option !== optionToRemove) }))
+    // console.log('hdo', optionToRemove)
+  }
+  handlePick = () => {
+    const randomNum = Math.floor(Math.random() * this.state.options.length)
+    const option = this.state.options[Math.floor(randomNum)]
+    alert(option)
+  }
+  handleAddOption = (option) => {
+    if (!option) {
+      return 'Enter valid value to add item'
+    } else if (this.state.options.indexOf(option) > -1) {
+      return 'This option already exists'
     }
+    // pushは破壊的なのでprevStateで使わない
+    this.setState((prevState) => ({ options: prevState.options.concat([option]) }))
   }
   // lifecycle methodはclass base componentのみ、stateless functional componentにはない機能
   componentDidMount() {
@@ -38,28 +53,6 @@ export default class IndecisionApp extends React.Component {
   }
   componentWillUnmount() {
     console.log('componentWillUnmount!')
-  }
-  // 親のstateを子要素から変更させる必要があるので、propsとしてstateを変更するfunctionを渡す
-  handleDeleteOptions() {
-    this.setState(() => ({ options: [] }))
-  }
-  handleDeleteOption(optionToRemove) {
-    this.setState((prevState) => ({ options: prevState.options.filter((option) => option !== optionToRemove) }))
-    // console.log('hdo', optionToRemove)
-  }
-  handlePick() {
-    const randomNum = Math.floor(Math.random() * this.state.options.length)
-    const option = this.state.options[Math.floor(randomNum)]
-    alert(option)
-  }
-  handleAddOption(option) {
-    if (!option) {
-      return 'Enter valid value to add item'
-    } else if (this.state.options.indexOf(option) > -1) {
-      return 'This option already exists'
-    }
-    // pushは破壊的なのでprevStateで使わない
-    this.setState((prevState) => ({ options: prevState.options.concat([option]) }))
   }
   render() {
     const subtitle = "Put your life in the hands of a computer"
