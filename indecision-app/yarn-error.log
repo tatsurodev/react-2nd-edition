@@ -1,5 +1,5 @@
 Arguments: 
-  /home/tatsuro/.nvm/versions/node/v12.14.0/bin/node /home/tatsuro/.nvm/versions/node/v12.14.0/bin/yarn add webpack-cli
+  /home/tatsuro/.nvm/versions/node/v12.14.0/bin/node /home/tatsuro/.nvm/versions/node/v12.14.0/bin/yarn add @babel-core
 
 PATH: 
   /home/tatsuro/anaconda3/bin:/home/tatsuro/anaconda3/condabin:/home/tatsuro/.nvm/versions/node/v12.14.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/lib/go-1.11/bin:/usr/lib/go-1.11/bin
@@ -14,32 +14,43 @@ Platform:
   linux x64
 
 Trace: 
-  SyntaxError: /home/tatsuro/Documents/dev/public/udemy/react-2nd-edition/indecision-app/package.json: Unexpected token } in JSON at position 481
-      at JSON.parse (<anonymous>)
-      at /home/tatsuro/.nvm/versions/node/v12.14.0/lib/node_modules/yarn/lib/cli.js:1625:59
-      at Generator.next (<anonymous>)
-      at step (/home/tatsuro/.nvm/versions/node/v12.14.0/lib/node_modules/yarn/lib/cli.js:310:30)
-      at /home/tatsuro/.nvm/versions/node/v12.14.0/lib/node_modules/yarn/lib/cli.js:321:13
+  Error: https://registry.yarnpkg.com/@babel-core: Request "https://registry.yarnpkg.com/@babel-core" returned a 405
+      at Request.params.callback [as _callback] (/home/tatsuro/.nvm/versions/node/v12.14.0/lib/node_modules/yarn/lib/cli.js:66984:18)
+      at Request.self.callback (/home/tatsuro/.nvm/versions/node/v12.14.0/lib/node_modules/yarn/lib/cli.js:140727:22)
+      at Request.emit (events.js:210:5)
+      at Request.<anonymous> (/home/tatsuro/.nvm/versions/node/v12.14.0/lib/node_modules/yarn/lib/cli.js:141699:10)
+      at Request.emit (events.js:210:5)
+      at IncomingMessage.<anonymous> (/home/tatsuro/.nvm/versions/node/v12.14.0/lib/node_modules/yarn/lib/cli.js:141621:12)
+      at Object.onceWrapper (events.js:299:28)
+      at IncomingMessage.emit (events.js:215:7)
+      at endReadableNT (_stream_readable.js:1184:12)
+      at processTicksAndRejections (internal/process/task_queues.js:80:21)
 
 npm manifest: 
   {
-    "name": "indecision-app",
-    "version": "1.0.0",
-    "main": "index.js",
-    "author": "tatsurodev",
-    "license": "MIT",
-    "scripts": {
-      "serve": "live-server public/",
-      "build": "webpack --watch",
-      "build-babel": "babel src/app.js --out-file=public/scripts/app.js --presets=env,react --watch"
-    },
-    "dependencies": {
-      "babel-cli": "^6.26.0",
-      "babel-preset-env": "1.5.2",
-      "babel-preset-react": "6.24.1",
-      "live-server": "^1.2.1",
-      "webpack": "^4.42.1",
-    }
+      "name": "indecision-app",
+      "version": "1.0.0",
+      "main": "index.js",
+      "author": "tatsurodev",
+      "license": "MIT",
+      "scripts": {
+          "serve": "live-server public/",
+          "build": "webpack --watch",
+          "build-babel": "babel src/app.js --out-file=public/scripts/app.js --presets=env,react --watch"
+      },
+      "dependencies": {
+          "babel-cli": "^6.26.0",
+          "babel-core": "^6.26.3",
+          "babel-loader": "^8.1.0",
+          "babel-preset-env": "1.5.2",
+          "babel-preset-react": "6.24.1",
+          "live-server": "^1.2.1",
+          "react": "^16.13.1",
+          "react-dom": "^16.13.1",
+          "validator": "^13.0.0",
+          "webpack": "^4.42.1",
+          "webpack-cli": "^3.3.11"
+      }
   }
 
 yarn manifest: 
@@ -228,7 +239,7 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/ajv-keywords/-/ajv-keywords-3.4.1.tgz#ef916e271c64ac12171fd8384eaae6b2345854da"
     integrity sha512-RO1ibKvd27e6FEShVFfPALuHI3WjSVNeK5FIsmme/LYRNxjKuNj+Dt7bucLa6NdSv3JcVTyMlm9kGR84z1XpaQ==
   
-  ajv@^6.1.0, ajv@^6.10.2:
+  ajv@^6.1.0, ajv@^6.10.2, ajv@^6.12.0:
     version "6.12.0"
     resolved "https://registry.yarnpkg.com/ajv/-/ajv-6.12.0.tgz#06d60b96d87b8454a5adaba86e7854da629db4b7"
     integrity sha512-D6gFiFA0RRLyUbvijN74DWAjXSFxWKaWP7mldxkVhyhAV3+SWA9HEJPHQ2c9soIeTFJqcSdFDGFgdqs1iUU2Hw==
@@ -388,7 +399,7 @@ Lockfile:
       esutils "^2.0.2"
       js-tokens "^3.0.2"
   
-  babel-core@^6.26.0:
+  babel-core@^6.26.0, babel-core@^6.26.3:
     version "6.26.3"
     resolved "https://registry.yarnpkg.com/babel-core/-/babel-core-6.26.3.tgz#b2e2f09e342d0f0c88e2f02e067794125e75c207"
     integrity sha512-6jyFLuDmeidKmUEb3NM+/yawG0M2bDZ9Z1qbZP59cyHLz8kYGKYwpJP0UwUKKUiTRNvxfLesJnTedqczP7cTDA==
@@ -548,6 +559,17 @@ Lockfile:
     dependencies:
       babel-runtime "^6.22.0"
       babel-template "^6.24.1"
+  
+  babel-loader@^8.1.0:
+    version "8.1.0"
+    resolved "https://registry.yarnpkg.com/babel-loader/-/babel-loader-8.1.0.tgz#c611d5112bd5209abe8b9fa84c3e4da25275f1c3"
+    integrity sha512-7q7nC1tYOrqvUrN3LQK4GwSk/TQorZSOlO9C+RZDZpODgyN4ZlCqE5q9cDsyWOliN+aU9B4JX01xK9eJXowJLw==
+    dependencies:
+      find-cache-dir "^2.1.0"
+      loader-utils "^1.4.0"
+      mkdirp "^0.5.3"
+      pify "^4.0.1"
+      schema-utils "^2.6.5"
   
   babel-messages@^6.23.0:
     version "6.23.0"
@@ -2583,7 +2605,7 @@ Lockfile:
       emojis-list "^2.0.0"
       json5 "^1.0.1"
   
-  loader-utils@^1.2.3:
+  loader-utils@^1.2.3, loader-utils@^1.4.0:
     version "1.4.0"
     resolved "https://registry.yarnpkg.com/loader-utils/-/loader-utils-1.4.0.tgz#c579b5e34cb34b1a74edc6c1fb36bfa371d5a613"
     integrity sha512-qH0WSMBtn/oHuwjy/NucEgbx5dbxxnxup9s4PVXJUDHZBQY+s0NWA9rJf53RBnQZxfch7euUui7hpoAPvALZdA==
@@ -2605,7 +2627,7 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
     integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
   
-  loose-envify@^1.0.0:
+  loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.4.0:
     version "1.4.0"
     resolved "https://registry.yarnpkg.com/loose-envify/-/loose-envify-1.4.0.tgz#71ee51fa7be4caec1a63839f7e682d8132d30caf"
     integrity sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==
@@ -3194,6 +3216,15 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/promise-inflight/-/promise-inflight-1.0.1.tgz#98472870bf228132fcbdd868129bad12c3c029e3"
     integrity sha1-mEcocL8igTL8vdhoEputEsPAKeM=
   
+  prop-types@^15.6.2:
+    version "15.7.2"
+    resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
+    integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
+    dependencies:
+      loose-envify "^1.4.0"
+      object-assign "^4.1.1"
+      react-is "^16.8.1"
+  
   proxy-middleware@latest:
     version "0.15.0"
     resolved "https://registry.yarnpkg.com/proxy-middleware/-/proxy-middleware-0.15.0.tgz#a3fdf1befb730f951965872ac2f6074c61477a56"
@@ -3294,6 +3325,30 @@ Lockfile:
     version "1.2.1"
     resolved "https://registry.yarnpkg.com/range-parser/-/range-parser-1.2.1.tgz#3cf37023d199e1c24d1a55b84800c2f3e6468031"
     integrity sha512-Hrgsx+orqoygnmhFbKaHE6c296J+HTAQXoxEF6gNupROmmGJRoyzfG3ccAveqCBrwr/2yxQ5BVd/GTl5agOwSg==
+  
+  react-dom@^16.13.1:
+    version "16.13.1"
+    resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.13.1.tgz#c1bd37331a0486c078ee54c4740720993b2e0e7f"
+    integrity sha512-81PIMmVLnCNLO/fFOQxdQkvEq/+Hfpv24XNJfpyZhTRfO0QcmQIF/PgCa1zCOj2w1hrn12MFLyaJ/G0+Mxtfag==
+    dependencies:
+      loose-envify "^1.1.0"
+      object-assign "^4.1.1"
+      prop-types "^15.6.2"
+      scheduler "^0.19.1"
+  
+  react-is@^16.8.1:
+    version "16.13.1"
+    resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
+    integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
+  
+  react@^16.13.1:
+    version "16.13.1"
+    resolved "https://registry.yarnpkg.com/react/-/react-16.13.1.tgz#2e818822f1a9743122c063d6410d85c1e3afe48e"
+    integrity sha512-YMZQQq32xHLX0bz5Mnibv1/LHb3Sqzngu7xstSM+vrkE5Kzr9xE0yMByK5kMoTK30YVJE61WfbxIFFvfeDKT1w==
+    dependencies:
+      loose-envify "^1.1.0"
+      object-assign "^4.1.1"
+      prop-types "^15.6.2"
   
   "readable-stream@1 || 2", readable-stream@^2.0.0, readable-stream@^2.0.1, readable-stream@^2.0.2, readable-stream@^2.1.5, readable-stream@^2.2.2, readable-stream@^2.3.3, readable-stream@^2.3.6, readable-stream@~2.3.6:
     version "2.3.7"
@@ -3478,6 +3533,14 @@ Lockfile:
     dependencies:
       ret "~0.1.10"
   
+  scheduler@^0.19.1:
+    version "0.19.1"
+    resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.19.1.tgz#4f3e2ed2c1a7d65681f4c854fa8c5a1ccb40f196"
+    integrity sha512-n/zwRWRYSUj0/3g/otKDRPMh6qv2SYMWNq85IEa8iZyAv8od9zDYpGSnpBEjNgcMNq6Scbu5KfIPxNF72R/2EA==
+    dependencies:
+      loose-envify "^1.1.0"
+      object-assign "^4.1.1"
+  
   schema-utils@^1.0.0:
     version "1.0.0"
     resolved "https://registry.yarnpkg.com/schema-utils/-/schema-utils-1.0.0.tgz#0b79a93204d7b600d4b2850d1f66c2a34951c770"
@@ -3486,6 +3549,14 @@ Lockfile:
       ajv "^6.1.0"
       ajv-errors "^1.0.0"
       ajv-keywords "^3.1.0"
+  
+  schema-utils@^2.6.5:
+    version "2.6.5"
+    resolved "https://registry.yarnpkg.com/schema-utils/-/schema-utils-2.6.5.tgz#c758f0a7e624263073d396e29cd40aa101152d8a"
+    integrity sha512-5KXuwKziQrTVHh8j/Uxz+QUbxkaLW9X/86NBlx/gnKgtsZA2GIVMUn17qWhRFwF8jdYb3Dig5hRO/W5mZqy6SQ==
+    dependencies:
+      ajv "^6.12.0"
+      ajv-keywords "^3.4.1"
   
   semver@^5.3.0, semver@^5.5.0, semver@^5.6.0:
     version "5.7.1"
@@ -4025,6 +4096,11 @@ Lockfile:
     integrity sha1-qrGh+jDUX4jdMhFIh1rALAtV5bQ=
     dependencies:
       user-home "^1.1.1"
+  
+  validator@^13.0.0:
+    version "13.0.0"
+    resolved "https://registry.yarnpkg.com/validator/-/validator-13.0.0.tgz#0fb6c6bb5218ea23d368a8347e6d0f5a70e3bcab"
+    integrity sha512-anYx5fURbgF04lQV18nEQWZ/3wHGnxiKdG4aL8J+jEDsm98n/sU/bey+tYk6tnGJzm7ioh5FoqrAiQ6m03IgaA==
   
   vary@^1:
     version "1.1.2"

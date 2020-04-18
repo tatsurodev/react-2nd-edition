@@ -8,5 +8,14 @@ module.exports = {
     path: path.join(__dirname, 'public'),
     filename: 'bundle.js'
   },
-  mode: 'development'
+  mode: 'development',
+  // loaderの設定
+  module: {
+    rules: [{
+      // babel-loaderによって該当fileがtranspileされる。babelの設定fileはrootの.babelrc
+      loader: 'babel-loader',
+      test: /\.js$/,
+      exclude: /node_modules/
+    }]
+  }
 }
