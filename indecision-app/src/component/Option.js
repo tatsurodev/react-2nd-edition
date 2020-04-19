@@ -6,6 +6,7 @@ const Option = (props) => (
   <div>
     {props.optionText}
     <button
+      className="button button--link"
       // handleDeleteOptionだとeを引数にしてしまうので、無名関数内でhandleDeleteOptionに引数を持たせる
       // onClick={props.handleDeleteOption}
       onClick={

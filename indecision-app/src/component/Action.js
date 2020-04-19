@@ -4,6 +4,7 @@ const Action = (props) => (
   <div>
     {/* eventですぐにfunctionをcallしたいわけではないので、括弧を付けずに括弧なしのreferenceをセットする */}
     <button
+      className="big-button"
       onClick={props.handlePick}
       disabled={!props.hasOptions}
     >

@@ -9,3 +9,11 @@ body {
     // remを使用して16pxになるようにremを設定
     font-size: $m-size;
 }
+
+button {
+    cursor: pointer;
+}
+
+button:disabled {
+    cursor: default;
+}
