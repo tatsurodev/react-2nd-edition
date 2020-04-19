@@ -5,6 +5,24 @@ import IndecisionApp from './component/IndecisionApp'
 
 ReactDOM.render(<IndecisionApp />, document.getElementById('app'))
 
+// childrenをcomponentに渡す、vueのslotのようなもの
+// const Layout = (props) => (
+//   <div>
+//     <p>header</p>
+//     {props.children}
+//     <p>footer</p>
+//   </div>
+// )
+
+// ReactDOM.render((
+//   <Layout>
+//     <div>
+//       <h1>Page Title</h1>
+//       <p>This is my page</p>
+//     </div>
+//   </Layout>
+// ), document.getElementById('app'))
+
 // class fieldの使い方。react component内のthisをbindする方法を簡潔化できる。es2019でもまだ追加されていないのでbabelのpluginでcompileする必要あり
 // 従来の方法、constructor内でpropertyとmethodのthisをbind
 /*
