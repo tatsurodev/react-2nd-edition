@@ -4,7 +4,8 @@ html {
 }
 
 body {
+    background: $dark-blue;
     font-family: Helvertica, Arial, sans-serif;
     // remを使用して16pxになるようにremを設定
-    font-size: 1.6rem;
+    font-size: $m-size;
 }
