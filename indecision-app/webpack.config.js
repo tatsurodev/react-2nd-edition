@@ -19,7 +19,7 @@ module.exports = {
         exclude: /node_modules/
       },
       {
-        test: /\.scss$/,
+        test: /\.s?css$/,
         // loaderとは違い、useはarrayで複数指定でき、後ろから順に適用される
         use: [
           // style tagにcssをset
