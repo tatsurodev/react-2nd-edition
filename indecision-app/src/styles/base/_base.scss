@@ -1,0 +1,10 @@
+html {
+    // baseのfont-sizeを便宜的に16px * 62.5% = 10pxとする
+    font-size: 62.5%;
+}
+
+body {
+    font-family: Helvertica, Arial, sans-serif;
+    // remを使用して16pxになるようにremを設定
+    font-size: 1.6rem;
+}
