@@ -13,10 +13,13 @@ const OptionModal = (props) => (
     contentLabel="Selected Option"
     // esc keyを押す、また画面上のoverlayをclickした時に行うcallback
     onRequestClose={props.handleClearSelectedOption}
+    closeTimeoutMS={200}
+    className="modal"
   >
-    <h3>Selected Optoin</h3>
-    {props.selectedOption && <p>{props.selectedOption}</p>}
+    <h3 className="modal__title">Selected Optoin</h3>
+    {props.selectedOption && <p className="modal__body">{props.selectedOption}</p>}
     <button
+      className="button"
       onClick={props.handleClearSelectedOption}
     >Okay</button>
   </Modal>
