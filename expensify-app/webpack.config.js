@@ -25,6 +25,8 @@ module.exports = {
   },
   devtool: 'cheap-module-eval-source-map',
   devServer: {
-    contentBase: path.join(__dirname, 'public')
+    contentBase: path.join(__dirname, 'public'),
+    // url直打ちで静的sourceが存在しない時404を返されるが、historyApiFallbackをtrueにするとtop urlを返した上でreact-routerによる変遷がなされる
+    historyApiFallback: true
   }
 }
