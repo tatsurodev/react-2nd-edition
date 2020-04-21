@@ -1,3 +1,8 @@
+//
+// object destructuring
+//
+
+/*
 const person = {
   name: 'Andrew',
   age: 27,
@@ -33,3 +38,17 @@ const book = {
 
 const { name: publisherName = 'Self-Published' } = book.publisher
 console.log(publisherName)
+*/
+
+//
+// array destructuring
+//
+
+const address = ['1299 S Juniper Stree', 'Philadelphia', 'Pennsylvania', '19147']
+// 配列の分割代入、defaultあり、省略も可
+const [, city, state = 'New York'] = address
+console.log(`You are in ${city} ${state}.`)
+
+const item = ['Coffee (hot)', '$3.00', '$3.50', '$3.75']
+const [itemName, , mediumPrice] = item
+console.log(`A medium ${itemName} costs ${mediumPrice}`)
