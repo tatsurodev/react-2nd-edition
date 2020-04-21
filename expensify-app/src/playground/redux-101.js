@@ -39,9 +39,27 @@ const resetCount = () => ({
   type: 'RESET'
 })
 
+// reducer: actionによってどういう処理を行うかを決定する
+// 特徴1. pure function: 関数外のscopeから影響を受けない、stateとactionによってのみoutputが決まる
+// pure functionでない例1
+/*
+let a = 10
+const add = (b) => {
+  return a + b
+}
+*/
+// pure functionでない例2、外のscopeに影響を与えるから
+/*
+let result
+const add(a, b) => {
+  result = a + b
+}
+*/
+// 特徴2. 直接state, actionを変更しない
+
 // store作成時にdefaultのstateが必要になるので関数の引数のstateにdefault stateをset
 // 第二引数のactionによって処理内容をswitch
-const store = createStore((state = { count: 0 }, action) => {
+const countReducer = (state = { count: 0 }, action) => {
   switch (action.type) {
     case 'INCREMENT':
       return {
@@ -62,7 +80,9 @@ const store = createStore((state = { count: 0 }, action) => {
     default:
       return state
   }
-})
+}
+
+const store = createStore(countReducer)
 
 // stateをwatch, stateが変化する度、引数のcallbackを実行。subscribe関数の返り値はunsubscribeなので、返り値を再度callするとunsubscribeできる
 const unsubscribe = store.subscribe(() => {
