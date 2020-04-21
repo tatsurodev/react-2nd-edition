@@ -14,9 +14,10 @@ const AppRouter = () => (
     <div>
       <Header />
       <Switch>
+        {/* Route componentは、match, location, historyなどのpropsを渡している */}
         <Route path="/" component={ExpenseDashboardPage} exact={true} />
         <Route path="/create" component={AddExpensePage} />
-        <Route path="/edit" component={EditExpensePage} />
+        <Route path="/edit/:id" component={EditExpensePage} />
         <Route path="/help" component={HelpPage} />
         {/* path省略で常にmatch */}
         <Route component={NotFoundPage} />
