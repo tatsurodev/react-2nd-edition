@@ -131,6 +131,20 @@ const filtersReducer = (state = filtersReducerDefaultState, action) => {
   }
 }
 
+// filterされたexpenseを取得
+const getVisibleExpenses = (expenses, { text, sortBy, startDate, endDate }) => {
+  // 3つの要素, text, startDate, endDateによってfilter
+  // それぞれmatchするか判定、3つともtrueなら全体としてもtrueを返す
+  return expenses.filter(expense => {
+    // timestamps(milliseconds): 基準日が1970-01-01 ex. 334000, 10, -203
+    const startDateMatch = typeof startDate !== 'number' || expense.createdAt >= startDate
+    const endDateMatch = typeof endDate !== 'number' || expense.createdAt <= endDate
+    // 大文字小文字関係なくmatchするかどうか
+    const textMatch = expense.description.toLowerCase().includes(text.toLowerCase())
+    return startDateMatch && endDateMatch && textMatch
+  })
+}
+
 // storeの作成、demoStateのようなstateを複数のreducerを組み合わせて作成する
 const store = createStore(
   // reducerをまとめる
@@ -141,30 +155,32 @@ const store = createStore(
   })
 )
 
-// stateのdebug用
+// stateが更新される度にfilterされたexpenseを取得する
 store.subscribe(() => {
-  console.log(store.getState())
+  const state = store.getState()
+  const visibleExpenses = getVisibleExpenses(state.expenses, state.filters)
+  console.log(visibleExpenses)
 })
 
 // store.dispatchの返り値はaction object
-const expenseOne = store.dispatch(addExpense({ description: 'Rent', amount: 100 }))
-const expenseTwo = store.dispatch(addExpense({ description: 'Coffee', amount: 300 }))
-// expenseOneを削除
-store.dispatch(removeExpense({ id: expenseOne.expense.id }))
+const expenseOne = store.dispatch(addExpense({ description: 'Rent', amount: 100, createdAt: 1000 }))
+const expenseTwo = store.dispatch(addExpense({ description: 'Coffee', amount: 300, createdAt: -1000 }))
+// // expenseOneを削除
+// store.dispatch(removeExpense({ id: expenseOne.expense.id }))
 
-// expenseの編集
-store.dispatch(editExpense(expenseTwo.expense.id, { amount: 500 }))
-// filter系
-store.dispatch(setTextFilter('rent'))
-store.dispatch(setTextFilter())
+// // expenseの編集
+// store.dispatch(editExpense(expenseTwo.expense.id, { amount: 500 }))
+// // filter系
+store.dispatch(setTextFilter('fee'))
+// store.dispatch(setTextFilter())
 
-store.dispatch(sortByAmount())
-store.dispatch(sortByDate())
+// store.dispatch(sortByAmount())
+// store.dispatch(sortByDate())
 
-store.dispatch(setStartDate(125))
-store.dispatch(setStartDate())
-store.dispatch(setEndDate(1250))
-store.dispatch(setEndDate())
+// store.dispatch(setStartDate(0))
+// store.dispatch(setStartDate())
+// store.dispatch(setEndDate(999))
+// store.dispatch(setEndDate())
 
 const demoState = {
   expenses: [{
