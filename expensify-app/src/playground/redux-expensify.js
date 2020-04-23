@@ -142,6 +142,13 @@ const getVisibleExpenses = (expenses, { text, sortBy, startDate, endDate }) => {
     // 大文字小文字関係なくmatchするかどうか
     const textMatch = expense.description.toLowerCase().includes(text.toLowerCase())
     return startDateMatch && endDateMatch && textMatch
+  }).sort((a, b) => {
+    // 比較関数を用いたsort
+    if (sortBy === 'date') {
+      return a.createdAt < b.createdAt ? 1 : -1
+    } else if (sortBy === 'amount') {
+      return a.amount < b.amoount ? 1 : -1
+    }
   })
 }
 
@@ -163,7 +170,7 @@ store.subscribe(() => {
 })
 
 // store.dispatchの返り値はaction object
-const expenseOne = store.dispatch(addExpense({ description: 'Rent', amount: 100, createdAt: 1000 }))
+const expenseOne = store.dispatch(addExpense({ description: 'Rent', amount: 100, createdAt: -21000 }))
 const expenseTwo = store.dispatch(addExpense({ description: 'Coffee', amount: 300, createdAt: -1000 }))
 // // expenseOneを削除
 // store.dispatch(removeExpense({ id: expenseOne.expense.id }))
@@ -171,10 +178,10 @@ const expenseTwo = store.dispatch(addExpense({ description: 'Coffee', amount: 30
 // // expenseの編集
 // store.dispatch(editExpense(expenseTwo.expense.id, { amount: 500 }))
 // // filter系
-store.dispatch(setTextFilter('fee'))
+// store.dispatch(setTextFilter('fee'))
 // store.dispatch(setTextFilter())
 
-// store.dispatch(sortByAmount())
+store.dispatch(sortByAmount())
 // store.dispatch(sortByDate())
 
 // store.dispatch(setStartDate(0))
