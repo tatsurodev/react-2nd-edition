@@ -1,3 +1,4 @@
+// test.jsの拡張子でtest対象
 import { addExpense, editExpense, removeExpense } from '../../actions/expenses'
 
 test('should setup remove expense action object', () => {
