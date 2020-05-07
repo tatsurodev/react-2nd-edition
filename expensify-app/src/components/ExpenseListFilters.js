@@ -48,6 +48,9 @@ class ExpenseListFilters extends React.Component {
           // 過去選択可
           numberOfMonths={1}
           isOutsideRange={() => false}
+          // 必須項目、inputのid, name等に使用される、適当でおｋ
+          startDateId="start"
+          endDateId="end"
         />
       </div>
     )
