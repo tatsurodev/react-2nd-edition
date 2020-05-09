@@ -1,12 +1,10 @@
 import React from 'react'
 import moment from 'moment'
 import { SingleDatePicker } from 'react-dates'
-import 'react-dates/initialize'
-import 'react-dates/lib/css/_datepicker.css'
 
 // const date = new Date()
-const now = moment()
-console.log(now.format('MMM Do, YYYY'))
+// const now = moment()
+// console.log(now.format('MMM Do, YYYY'))
 
 export default class ExpenseForm extends React.Component {
   // 親のEditExpensePageからprops.expenseを渡されている場合、props.expenseをstateの初期値にsetする、this.state = {}だとpropsにaccessできる方法がないのでconstructorを使用する
@@ -17,6 +15,7 @@ export default class ExpenseForm extends React.Component {
       description: props.expense ? props.expense.description : '',
       note: props.expense ? props.expense.note : '',
       amount: props.expense ? (props.expense.amount / 100).toString() : '',
+      // testの際、testを走らせる度moment()で得られる時間が違うためsnapshotが異なってしまうのでmockする必要あり
       createdAt: props.expense ? moment(props.expense.createdAt) : moment(),
       calendarFocused: false,
       error: ''
