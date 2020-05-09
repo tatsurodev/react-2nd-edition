@@ -3,13 +3,19 @@ import { connect } from 'react-redux'
 import ExpenseListItem from './ExpenseListItem'
 import selectExpenses from '../selectors/expenses'
 
-const ExpenseList = (props) => (
+// stateとunconnectedな状態でtestする必要があるのでexport
+export const ExpenseList = (props) => (
   <div>
-    <h1>Expense List</h1>
-    {props.expenses.map((expense) => {
-      // jsxの新機能、スプレッド属性(spread attributes): 渡されたobjectのpropertyはcomponentのpropsに一気に渡せる
-      return <ExpenseListItem key={expense.id} {...expense} />
-    })}
+    {
+      props.expenses.length === 0 ? (
+        <p>No expenses</p>
+      ) : (
+          props.expenses.map((expense) => {
+            // jsxの新機能、スプレッド属性(spread attributes): 渡されたobjectのpropertyはcomponentのpropsに一気に渡せる
+            return <ExpenseListItem key={expense.id} {...expense} />
+          })
+        )
+    }
   </div>
 )
 
