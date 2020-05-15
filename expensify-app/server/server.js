@@ -3,6 +3,8 @@ const express = require('express')
 const app = express()
 const path = require('path')
 const publicPath = path.join(__dirname, '..', 'public')
+// herokuのdynamic portを取得
+const port = process.env.PORT || 3000
 
 // use methodでmiddlewareの設定、serverにaccessがある度にpublic folder内のfileをstatic fileとしてserveする
 app.use(express.static(publicPath))
@@ -13,6 +15,6 @@ app.get('*', (req, res) => {
 })
 
 // portの指定
-app.listen(3000, () => {
+app.listen(port, () => {
   console.log('Server is up!')
 })
