@@ -14,7 +14,7 @@ module.exports = (env) => {
     mode: 'development',
     entry: './src/app.js',
     output: {
-      path: path.join(__dirname, 'public'),
+      path: path.join(__dirname, 'public', 'dist'),
       filename: 'bundle.js'
     },
     module: {
@@ -50,9 +50,12 @@ module.exports = (env) => {
     // prod時のみsource-mapでsource mapを別fileに
     devtool: isProduction ? 'source-map' : 'inline-source-map',
     devServer: {
+      // 公開するroot directory, index.html等のresourceがあるところ
       contentBase: path.join(__dirname, 'public'),
       // url直打ちで静的sourceが存在しない時404を返されるが、historyApiFallbackをtrueにするとtop urlを返した上でreact-routerによる変遷がなされる
-      historyApiFallback: true
+      historyApiFallback: true,
+      // bundleのpath
+      publicPath: '/dist/'
     }
   }
 }
