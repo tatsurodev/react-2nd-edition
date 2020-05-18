@@ -13,6 +13,25 @@ const firebaseConfig = {
 }
 
 firebase.initializeApp(firebaseConfig)
-firebase.database().ref().set({
-  name: 'Andrew Mead'
+
+const database = firebase.database()
+// refを指定しない時、root refを取得する
+database.ref().set({
+  name: 'Andrew Mead',
+  age: 26,
+  isSingle: false,
+  location: {
+    city: 'Philadelphoa',
+    country: 'United States'
+  }
+})
+
+// root refなので全てを書き換えてしまう
+// database.ref().set('This is my data.')
+
+database.ref('age').set(27)
+database.ref('location/city').set('New York')
+database.ref('attributes').set({
+  height: 73,
+  weight: 150
 })
