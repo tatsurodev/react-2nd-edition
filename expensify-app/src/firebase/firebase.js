@@ -15,7 +15,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig)
 
 const database = firebase.database()
-// refを指定しない時、root refを取得する
+// refを指定しない時、root refを取得する。setはpromiseをreturn
 database.ref().set({
   name: 'Andrew Mead',
   age: 26,
@@ -24,14 +24,22 @@ database.ref().set({
     city: 'Philadelphoa',
     country: 'United States'
   }
+}).then(() => {
+  console.log('Data is saved!')
+}).catch(e => {
+  console.log('This is failed. ', e)
 })
 
 // root refなので全てを書き換えてしまう
 // database.ref().set('This is my data.')
 
-database.ref('age').set(27)
-database.ref('location/city').set('New York')
+// database.ref('age').set(27)
+// database.ref('location/city').set('New York')
 database.ref('attributes').set({
   height: 73,
   weight: 150
+}).then(() => {
+  console.log('Second set call worked.')
+}).catch(e => {
+  console.log('Things didn\'t work for the second error.')
 })
