@@ -17,6 +17,69 @@ firebase.initializeApp(firebaseConfig)
 const database = firebase.database()
 
 /*
+// firebaseは配列型に対応していない
+const notes = [
+  {
+    id: '12',
+    title: 'First note!',
+    body: 'This is my note'
+  },
+  {
+    id: '761ase',
+    title: 'Another note',
+    body: 'This is my note'
+  }
+]
+// 配列型は下記のようなobject形式に変換され保存される
+const firebaseNotes = {
+  notes: {
+    fhdsuafhjka: {
+      title: 'First note!',
+      body: 'This is my note'
+    },
+    fdjkdajflki: {
+      title: 'Another note',
+      body: 'This is my note'
+    }
+  }
+}
+database.ref('notes').set(notes)
+database.ref('notes/12')
+*/
+
+/*
+// idを自動的にfirebaseに生成させるにはpushを使用する
+database.ref('notes').push(
+  {
+    title: 'Course Topics',
+    body: 'React Native, Angular, Python'
+  }
+)
+*/
+
+// idをrefに指定して操作
+// database.ref('notes/-M7flh244fzKmEyPrr8d').remove()
+
+database.ref('expenses').push({
+  description: 'Rent',
+  note: '',
+  amount: 109500,
+  createdAt: 4382943829
+})
+database.ref('expenses').push({
+  description: 'Phone bill',
+  note: '',
+  amount: 5900,
+  createdAt: 4384543759
+})
+database.ref('expenses').push({
+  description: 'Food',
+  note: '',
+  amount: 1200,
+  createdAt: 4332893849
+})
+
+/*
 database
   .ref()
   .once('value')
@@ -68,6 +131,7 @@ setTimeout(() => {
 }, 10500)
 */
 
+/*
 database.ref().on(
   'value',
   snapshot => {
@@ -75,7 +139,7 @@ database.ref().on(
     console.log(`${val.name} is a ${val.job.title} at ${val.job.company}.`)
   }
 )
-
+*/
 
 /*
 // refを指定しない時、root refを取得する。setはpromiseをreturn
@@ -146,13 +210,15 @@ database.ref().update({
 })
 */
 
-// database.ref('isSingle')
-//   .remove()
-//   .then(() => {
-//     console.log('Data was removed')
-//   })
-//   .catch(e => {
-//     console.log('Did not remove data', e)
-//   })
-// set(null)はremove()と同値
-// database.ref('isSingle').set(null)
+/*
+database.ref('isSingle')
+  .remove()
+  .then(() => {
+    console.log('Data was removed')
+  })
+  .catch(e => {
+    console.log('Did not remove data', e)
+  })
+set(null)はremove()と同値
+database.ref('isSingle').set(null)
+*/
