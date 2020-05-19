@@ -43,3 +43,14 @@ database.ref('attributes').set({
 }).catch(e => {
   console.log('Things didn\'t work for the second error.')
 })
+
+// database.ref('isSingle')
+//   .remove()
+//   .then(() => {
+//     console.log('Data was removed')
+//   })
+//   .catch(e => {
+//     console.log('Did not remove data', e)
+//   })
+// set(null)はremove()と同値
+// database.ref('isSingle').set(null)
