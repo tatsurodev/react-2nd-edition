@@ -17,6 +17,74 @@ firebase.initializeApp(firebaseConfig)
 const database = firebase.database()
 
 /*
+database
+  .ref('expenses')
+  .once('value')
+  .then(snapshot => {
+    const expenses = []
+    snapshot.forEach(
+      // childSnapshot => {処理} をchildSnapshot => 処理 にしてしまうとreturnしてしまうことになりfirebaseのforEach methodが全て回る前に修了してしまうので注意
+      childSnapshot => {
+        expenses.push({
+          id: childSnapshot.key,
+          ...childSnapshot.val()
+        })
+      }
+    )
+    console.log(expenses)
+  })
+*/
+
+/*
+// firebaseのexpensesが更新される度、local js上のexpensesも更新
+database
+  .ref('expenses')
+  .on(
+    'value',
+    snapshot => {
+      const expenses = []
+      snapshot.forEach(childSnapshot => {
+        expenses.push({
+          id: childSnapshot.key,
+          ...childSnapshot.val()
+        })
+      })
+      console.log(expenses)
+    }
+  )
+*/
+
+// onに使用できる削除系event, child_removed
+database
+  .ref('expenses')
+  .on(
+    'child_removed',
+    snapshot => {
+      console.log(snapshot.key, snapshot.val())
+    }
+  )
+
+// 更新系event, child_changed
+database
+  .ref('expenses')
+  .on(
+    'child_changed',
+    snapshot => {
+      console.log(snapshot.key, snapshot.val())
+    }
+  )
+
+// 追加系event, child_added。listenした時点での全dataとその後追加dataがある度呼ばれる
+database
+  .ref('expenses')
+  .on(
+    'child_added',
+    snapshot => {
+      console.log(snapshot.key, snapshot.val())
+    }
+  )
+
+/*
 // firebaseは配列型に対応していない
 const notes = [
   {
@@ -66,6 +134,7 @@ database.ref('expenses').push({
   amount: 109500,
   createdAt: 4382943829
 })
+/*
 database.ref('expenses').push({
   description: 'Phone bill',
   note: '',
@@ -78,6 +147,7 @@ database.ref('expenses').push({
   amount: 1200,
   createdAt: 4332893849
 })
+*/
 
 /*
 database
