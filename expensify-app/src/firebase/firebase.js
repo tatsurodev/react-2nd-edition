@@ -19,7 +19,11 @@ const database = firebase.database()
 database.ref().set({
   name: 'Andrew Mead',
   age: 26,
-  isSingle: false,
+  stressLevel: 6,
+  job: {
+    title: 'Software developer',
+    company: 'Google'
+  },
   location: {
     city: 'Philadelphoa',
     country: 'United States'
@@ -33,8 +37,9 @@ database.ref().set({
 // root refなので全てを書き換えてしまう
 // database.ref().set('This is my data.')
 
-// database.ref('age').set(27)
-// database.ref('location/city').set('New York')
+/*
+database.ref('age').set(27)
+database.ref('location/city').set('New York')
 database.ref('attributes').set({
   height: 73,
   weight: 150
@@ -42,6 +47,37 @@ database.ref('attributes').set({
   console.log('Second set call worked.')
 }).catch(e => {
   console.log('Things didn\'t work for the second error.')
+})
+*/
+
+/*
+// updateでpropertyの更新、追加、削除が可能
+database.ref().update({
+  name: 'Mike',
+  age: 29,
+  // 新しいpropertyの追加で新たにproperty追加
+  job: 'Software developer',
+  // nullでpropertyの削除
+  isSingle: null
+})
+*/
+
+/*
+database.ref().update({
+  job: 'Manager',
+  // location全部が更新されcountryがなくなる
+  // location: {
+  //   city: 'Boston'
+  // },
+  // locationのcityのみ更新
+  'location/city': 'Boston',
+})
+*/
+
+database.ref().update({
+  stressLevel: 9,
+  'job/company': 'Amazon',
+  'location/city': 'Seattle'
 })
 
 // database.ref('isSingle')
