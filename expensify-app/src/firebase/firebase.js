@@ -15,6 +15,69 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig)
 
 const database = firebase.database()
+
+/*
+database
+  .ref()
+  .once('value')
+  .then(snapshot => {
+    const val = snapshot.val()
+    console.log(val)
+  })
+  .catch(e => {
+    console.log('Error fetching data', e)
+  })
+*/
+
+/*
+// subscriptionのcallbackを作成、on, offで使用
+const onValueChange = snapshot => {
+  console.log(snapshot.val())
+}
+database.ref().on('value', onValueChange)
+setTimeout(() => {
+  database.ref('age').set(29)
+}, 3500)
+setTimeout(() => {
+  // offに引数を指定しない場合、refの全subscriptionが削除される
+  database.ref().off(onValueChange)
+}, 7000)
+setTimeout(() => {
+  database.ref('age').set(30)
+}, 10500)
+*/
+
+/*
+// onで返ってくるのはonで指定したcallbackなのでそれを変数に保存し、offでunsubscribeする。第一引数はevent, 第二引数は成功時のcallback, 第三引数は失敗時のcallback。onの第二、第三引数の代わりにthen, catchが使えそうだが, promiseは一度resolve, rejectされると再利用できないため、snapshotが変わる度実行する必要があるようなsubscriptionには使えないのでonの引数でcallbackを指定している
+const onValueChange = database.ref().on('value',
+  snapshot => {
+    console.log(snapshot.val())
+  },
+  e => {
+    console.log('Error with data fetching', e)
+  }
+)
+setTimeout(() => {
+  database.ref('age').set(29)
+}, 3500)
+setTimeout(() => {
+  database.ref().off(onValueChange)
+}, 7000)
+setTimeout(() => {
+  database.ref('age').set(30)
+}, 10500)
+*/
+
+database.ref().on(
+  'value',
+  snapshot => {
+    const val = snapshot.val()
+    console.log(`${val.name} is a ${val.job.title} at ${val.job.company}.`)
+  }
+)
+
+
+/*
 // refを指定しない時、root refを取得する。setはpromiseをreturn
 database.ref().set({
   name: 'Andrew Mead',
@@ -33,6 +96,7 @@ database.ref().set({
 }).catch(e => {
   console.log('This is failed. ', e)
 })
+*/
 
 // root refなので全てを書き換えてしまう
 // database.ref().set('This is my data.')
@@ -74,11 +138,13 @@ database.ref().update({
 })
 */
 
+/*
 database.ref().update({
   stressLevel: 9,
   'job/company': 'Amazon',
   'location/city': 'Seattle'
 })
+*/
 
 // database.ref('isSingle')
 //   .remove()
