@@ -1,6 +1,8 @@
 const path = require('path')
 // cssを別fileに書き出すためのplugin
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+// dotenv用
+const Dotenv = require('dotenv-webpack')
 
 // objectではなく、関数を指定することによってenv等の引数の使用が可能になる
 module.exports = (env) => {
@@ -45,7 +47,8 @@ module.exports = (env) => {
         }]
     },
     plugins: [
-      MiniCssExtract
+      MiniCssExtract,
+      new Dotenv()
     ],
     // prod時のみsource-mapでsource mapを別fileに
     devtool: isProduction ? 'source-map' : 'inline-source-map',
