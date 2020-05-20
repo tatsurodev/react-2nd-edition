@@ -16,6 +16,8 @@ firebase.initializeApp(firebaseConfig)
 
 const database = firebase.database()
 
+export { firebase, database as default }
+
 /*
 database
   .ref('expenses')
@@ -54,6 +56,7 @@ database
   )
 */
 
+/*
 // onに使用できる削除系event, child_removed
 database
   .ref('expenses')
@@ -83,6 +86,7 @@ database
       console.log(snapshot.key, snapshot.val())
     }
   )
+*/
 
 /*
 // firebaseは配列型に対応していない
@@ -128,13 +132,13 @@ database.ref('notes').push(
 // idをrefに指定して操作
 // database.ref('notes/-M7flh244fzKmEyPrr8d').remove()
 
+/*
 database.ref('expenses').push({
   description: 'Rent',
   note: '',
   amount: 109500,
   createdAt: 4382943829
 })
-/*
 database.ref('expenses').push({
   description: 'Phone bill',
   note: '',
