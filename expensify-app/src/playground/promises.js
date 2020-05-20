@@ -1,21 +1,25 @@
 const promise = new Promise((resolve, reject) => {
   setTimeout(() => {
-    // resolve({
-    //   name: 'Andrew',
-    //   age: 26
-    // })
+    resolve({
+      name: 'Andrew',
+      age: 26
+    })
     // resolve, rejectは一度のみ
     // resolve('This is my other resolved data')
     // 引数は複数渡せない、複数dataを渡す必要がある時はobjectで渡す
     // resolve('This is my resolved data', 'other')
 
-    reject('Something went wrong!')
+    // reject('Something went wrong!')
   }, 1500)
 })
 
 console.log('before')
 promise.then(data => {
   console.log('1', data)
+  // ここでreturnしたものが次のthenの引数として使える
+  return 'some data'
+}).then((str) => {
+  console.log('does this run?', str)
 }).catch(error => {
   console.log('error: ', error)
 })

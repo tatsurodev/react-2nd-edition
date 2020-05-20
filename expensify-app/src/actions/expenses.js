@@ -17,8 +17,8 @@ export const startAddExpense = (expenseData = {}) => {
       createdAt = 0
     } = expenseData
     const expense = { description, note, amount, createdAt }
-    // pushの返り値に挿入したdataのrefが返ってくる
-    database.ref('expenses').push(expense).then((ref) => {
+    // pushの返り値に挿入したdataのrefが返ってくる。returnすることでpromise chainが使用できる
+    return database.ref('expenses').push(expense).then((ref) => {
       dispatch(addExpense({
         id: ref.key,
         ...expense
