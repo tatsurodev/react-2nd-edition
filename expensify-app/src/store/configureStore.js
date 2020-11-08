@@ -12,7 +12,7 @@ export default () => {
     combineReducers({
       // keyとreducerのpair
       expenses: expensesReducer,
-      filters: filtersReducer
+      filters: filtersReducer,
     }),
     // redux devtools用の設定
     // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()

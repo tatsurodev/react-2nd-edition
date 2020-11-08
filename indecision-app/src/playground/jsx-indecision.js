@@ -3,7 +3,7 @@ console.log('App.js is running!')
 const app = {
   title: 'Indecision App',
   subtitle: 'Put your life in the hands of a computer',
-  options: []
+  options: [],
 }
 
 const onFormSubmit = (e) => {
@@ -37,13 +37,15 @@ const render = () => {
       {/* logical and operator */}
       {app.subtitle && <p>{app.subtitle}</p>}
       {/* ternary operator */}
-      <p>{app.options.length > 0 ? "Here are your options" : "No options"}</p>
-      <button onClick={onMakeDecision} disabled={app.options.length === 0}>What should I do?</button>
+      <p>{app.options.length > 0 ? 'Here are your options' : 'No options'}</p>
+      <button onClick={onMakeDecision} disabled={app.options.length === 0}>
+        What should I do?
+      </button>
       <button onClick={onRemoveAll}>Remove All</button>
       <ol>
-        {
-          app.options.map(option => <li key={option}>{option}</li>)
-        }
+        {app.options.map((option) => (
+          <li key={option}>{option}</li>
+        ))}
       </ol>
       <form onSubmit={onFormSubmit}>
         <input type="text" name="option" />

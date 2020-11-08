@@ -18,7 +18,7 @@ export default class ExpenseForm extends React.Component {
       // testの際、testを走らせる度moment()で得られる時間が違うためsnapshotが異なってしまうのでmockする必要あり
       createdAt: props.expense ? moment(props.expense.createdAt) : moment(),
       calendarFocused: false,
-      error: ''
+      error: '',
     }
   }
   onDescriptionChange = (e) => {
@@ -61,7 +61,7 @@ export default class ExpenseForm extends React.Component {
         amount: parseFloat(this.state.amount, 10) * 100,
         // valueOf methodでmoment objectをtimestampに変換
         createdAt: this.state.createdAt.valueOf(),
-        note: this.state.note
+        note: this.state.note,
       })
     }
   }
@@ -95,8 +95,7 @@ export default class ExpenseForm extends React.Component {
             placeholder="Add a note for your expense (optional)"
             value={this.state.note}
             onChange={this.onNoteChange}
-          >
-          </textarea>
+          ></textarea>
           <button>Add Expense</button>
         </form>
       </div>

@@ -1,7 +1,12 @@
 // test.jsの拡張子でtest対象
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
-import { startAddExpense, addExpense, editExpense, removeExpense } from '../../actions/expenses'
+import {
+  startAddExpense,
+  addExpense,
+  editExpense,
+  removeExpense,
+} from '../../actions/expenses'
 import expenses from '../fixtures/expenses'
 import database from '../../firebase/firebase'
 
@@ -13,7 +18,7 @@ test('should setup remove expense action object', () => {
   // toBeは===を期待するのでarray===another_array, object===another_objectは成り立たないので、中身が等しければtrueとなるtoEqualを使用する
   expect(action).toEqual({
     type: 'REMOVE_EXPENSE',
-    id: '123abc'
+    id: '123abc',
   })
 })
 
@@ -23,8 +28,8 @@ test('should setup edit expense action object', () => {
     type: 'EDIT_EXPENSE',
     id: '123abc',
     updates: {
-      note: 'New note value'
-    }
+      note: 'New note value',
+    },
   })
 })
 
@@ -32,7 +37,7 @@ test('should setup add expense action object with provided values', () => {
   const action = addExpense(expenses[2])
   expect(action).toEqual({
     type: 'ADD_EXPENSE',
-    expense: expenses[2]
+    expense: expenses[2],
   })
 })
 
@@ -42,23 +47,26 @@ test('should add expense to database and store', (done) => {
     description: 'Mouse',
     amount: 3000,
     note: 'This one is better',
-    createdAt: 1000
+    createdAt: 1000,
   }
   // startAddExpenseはasynchronousなのでdoneでjestにtestが終わったことを知らせる必要がある
-  store.dispatch(startAddExpense(expenseData)).then(() => {
-    const actions = store.getActions()
-    expect(actions[0]).toEqual({
-      type: 'ADD_EXPENSE',
-      expense: {
-        id: expect.any(String),
-        ...expenseData
-      }
+  store
+    .dispatch(startAddExpense(expenseData))
+    .then(() => {
+      const actions = store.getActions()
+      expect(actions[0]).toEqual({
+        type: 'ADD_EXPENSE',
+        expense: {
+          id: expect.any(String),
+          ...expenseData,
+        },
+      })
+      return database.ref(`expenses/${actions[0].expense.id}`).once('value')
     })
-    return database.ref(`expenses/${actions[0].expense.id}`).once('value')
-  }).then((snapshot) => {
-    expect(snapshot.val()).toEqual(expenseData)
-    done()
-  })
+    .then((snapshot) => {
+      expect(snapshot.val()).toEqual(expenseData)
+      done()
+    })
 })
 
 test('should add expense with defaults to database and store', (done) => {
@@ -67,22 +75,25 @@ test('should add expense with defaults to database and store', (done) => {
     description: '',
     amount: 0,
     note: '',
-    createdAt: 0
+    createdAt: 0,
   }
-  store.dispatch(startAddExpense({})).then(() => {
-    const actions = store.getActions()
-    expect(actions[0]).toEqual({
-      type: 'ADD_EXPENSE',
-      expense: {
-        id: expect.any(String),
-        ...expenseDefault
-      }
+  store
+    .dispatch(startAddExpense({}))
+    .then(() => {
+      const actions = store.getActions()
+      expect(actions[0]).toEqual({
+        type: 'ADD_EXPENSE',
+        expense: {
+          id: expect.any(String),
+          ...expenseDefault,
+        },
+      })
+      return database.ref(`expenses/${actions[0].expense.id}`).once('value')
     })
-    return database.ref(`expenses/${actions[0].expense.id}`).once('value')
-  }).then((snapshot) => {
-    expect(snapshot.val()).toEqual(expenseDefault)
-    done()
-  })
+    .then((snapshot) => {
+      expect(snapshot.val()).toEqual(expenseDefault)
+      done()
+    })
 })
 
 // test('should setup add expense action object with default values', () => {

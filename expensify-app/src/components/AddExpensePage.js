@@ -13,15 +13,13 @@ export class AddExpensePage extends React.Component {
     return (
       <div>
         <h1>Add Expense</h1>
-        <ExpenseForm
-          onSubmit={this.onSubmit}
-        />
+        <ExpenseForm onSubmit={this.onSubmit} />
       </div>
     )
   }
 }
 const mapDispatchToProps = (dispatch) => ({
-  startAddExpense: (expense) => dispatch(startAddExpense(expense))
+  startAddExpense: (expense) => dispatch(startAddExpense(expense)),
 })
 
 // props.dispatchにaccessしたいだけで他のpropsにaccessしたいわけではないのでmapStateToPropsは不要

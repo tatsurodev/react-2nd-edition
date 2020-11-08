@@ -44,7 +44,12 @@ console.log(publisherName)
 // array destructuring
 //
 
-const address = ['1299 S Juniper Stree', 'Philadelphia', 'Pennsylvania', '19147']
+const address = [
+  '1299 S Juniper Stree',
+  'Philadelphia',
+  'Pennsylvania',
+  '19147',
+]
 // 配列の分割代入、defaultあり、省略も可
 const [, city, state = 'New York'] = address
 console.log(`You are in ${city} ${state}.`)

@@ -6,7 +6,7 @@ module.exports = {
   output: {
     // absolute pathのみ可
     path: path.join(__dirname, 'public'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
   mode: 'development',
   // loaderの設定
@@ -16,7 +16,7 @@ module.exports = {
         // babel-loaderによって該当fileがtranspileされる。babelの設定fileはrootの.babelrc
         loader: 'babel-loader',
         test: /\.js$/,
-        exclude: /node_modules/
+        exclude: /node_modules/,
       },
       {
         test: /\.s?css$/,
@@ -27,9 +27,10 @@ module.exports = {
           // cssをjsにcompile
           'css-loader',
           // sassをcssにcompile
-          'sass-loader'
-        ]
-      }]
+          'sass-loader',
+        ],
+      },
+    ],
   },
   // error時のdebugをしやすくするためにsource mapを指定。bundle.jsが動いている雄一のjs fileだが、cheap-module-eval-source-mapで該当のerrorがどのjs fileで発生しているか、browser側が判断できるようになる
   devtool: 'cheap-module-eval-source-map',
@@ -38,6 +39,6 @@ module.exports = {
   // webpack-dev-serverのsetup
   devServer: {
     // public folderのpath
-    contentBase: path.join(__dirname, 'public')
-  }
+    contentBase: path.join(__dirname, 'public'),
+  },
 }

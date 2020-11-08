@@ -4,7 +4,7 @@ import database from '../firebase/firebase'
 // ADD_EXPENSE
 export const addExpense = (expense) => ({
   type: 'ADD_EXPENSE',
-  expense
+  expense,
 })
 
 // redux-thunkの設定でasync処理が可能
@@ -14,16 +14,21 @@ export const startAddExpense = (expenseData = {}) => {
       description = '',
       note = '',
       amount = 0,
-      createdAt = 0
+      createdAt = 0,
     } = expenseData
     const expense = { description, note, amount, createdAt }
     // pushの返り値に挿入したdataのrefが返ってくる。returnすることでpromise chainが使用できる
-    return database.ref('expenses').push(expense).then((ref) => {
-      dispatch(addExpense({
-        id: ref.key,
-        ...expense
-      }))
-    })
+    return database
+      .ref('expenses')
+      .push(expense)
+      .then((ref) => {
+        dispatch(
+          addExpense({
+            id: ref.key,
+            ...expense,
+          })
+        )
+      })
   }
 }
 
@@ -31,12 +36,12 @@ export const startAddExpense = (expenseData = {}) => {
 // defaultを{}にすることで引数なしでもおｋ
 export const removeExpense = ({ id } = {}) => ({
   type: 'REMOVE_EXPENSE',
-  id
+  id,
 })
 
 // EDIT_EXPENSE
 export const editExpense = (id, updates) => ({
   type: 'EDIT_EXPENSE',
   id,
-  updates
+  updates,
 })

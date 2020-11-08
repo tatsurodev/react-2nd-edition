@@ -9,8 +9,8 @@ const Action = (props) => (
       disabled={!props.hasOptions}
     >
       What should I do?
-        </button>
-  </div >
+    </button>
+  </div>
 )
 
 export default Action
