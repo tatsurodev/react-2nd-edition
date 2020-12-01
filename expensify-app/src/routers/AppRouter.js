@@ -1,5 +1,6 @@
 import React from 'react'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { Router, Route, Switch } from 'react-router-dom'
+import createHistory from 'history/createBrowserHistory'
 import ExpenseDashboardPage from '../components/ExpenseDashboardPage'
 import AddExpensePage from '../components/AddExpensePage'
 import EditExpensePage from '../components/EditExpensePage'
@@ -8,9 +9,11 @@ import NotFoundPage from '../components/NotFoundPage'
 import Header from '../components/Header'
 import LoginPage from '../components/LoginPage'
 
+export const history = createHistory()
+
 const AppRouter = () => (
   // BrowserRouterのchildの数は、0 or 1つのみなので、複数存在する時は<div>で括ってやる
-  <BrowserRouter>
+  <Router history={history}>
     {/* Switchで上から順にcheckし、matchした時にstop */}
     <div>
       <Header />
@@ -25,7 +28,7 @@ const AppRouter = () => (
         <Route component={NotFoundPage} />
       </Switch>
     </div>
-  </BrowserRouter>
+  </Router>
 )
 
 export default AppRouter
