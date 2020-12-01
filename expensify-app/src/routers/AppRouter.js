@@ -6,8 +6,8 @@ import AddExpensePage from '../components/AddExpensePage'
 import EditExpensePage from '../components/EditExpensePage'
 import HelpPage from '../components/HelpPage'
 import NotFoundPage from '../components/NotFoundPage'
-import Header from '../components/Header'
 import LoginPage from '../components/LoginPage'
+import PrivateRoute from './PrivateRoute'
 
 export const history = createHistory()
 
@@ -16,13 +16,12 @@ const AppRouter = () => (
   <Router history={history}>
     {/* Switchで上から順にcheckし、matchした時にstop */}
     <div>
-      <Header />
       <Switch>
         {/* Route componentは、match, location, historyなどのpropsを渡している */}
         <Route path="/" component={LoginPage} exact={true} />
-        <Route path="/dashboard" component={ExpenseDashboardPage} />
-        <Route path="/create" component={AddExpensePage} />
-        <Route path="/edit/:id" component={EditExpensePage} />
+        <PrivateRoute path="/dashboard" component={ExpenseDashboardPage} />
+        <PrivateRoute path="/create" component={AddExpensePage} />
+        <PrivateRoute path="/edit/:id" component={EditExpensePage} />
         <Route path="/help" component={HelpPage} />
         {/* path省略で常にmatch */}
         <Route component={NotFoundPage} />
