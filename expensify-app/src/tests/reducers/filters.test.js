@@ -9,7 +9,7 @@ test('should setup default filter values', () => {
     text: '',
     sortBy: 'date',
     startDate: moment().startOf('month'),
-    endDate: moment().endOf('month')
+    endDate: moment().endOf('month'),
   })
 })
 
@@ -24,7 +24,7 @@ test('shold set sortBy to date', () => {
     startDate: undefined,
     endDate: undefined,
     // 初期値をamountにしておいてからactionでsortByをdateに変更、testする
-    sortBy: 'amount'
+    sortBy: 'amount',
   }
   const action = { type: 'SORT_BY_DATE' }
   const state = filtersReducer(currentState, action)
@@ -35,7 +35,7 @@ test('should set text filter', () => {
   const text = 'This is my filter'
   const action = {
     type: 'SET_TEXT_FILTER',
-    text
+    text,
   }
   const state = filtersReducer(undefined, action)
   expect(state.text).toBe(text)
@@ -45,7 +45,7 @@ test('should set start date filter', () => {
   const startDate = moment()
   const action = {
     type: 'SET_START_DATE',
-    startDate
+    startDate,
   }
   const state = filtersReducer(undefined, action)
   // moment objectの判定なのでtoBeではなくtoEqualを使用
@@ -56,7 +56,7 @@ test('should set end date filter', () => {
   const endDate = moment()
   const action = {
     type: 'SET_END_DATE',
-    endDate
+    endDate,
   }
   const state = filtersReducer(undefined, action)
   expect(state.endDate).toEqual(endDate)

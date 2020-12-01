@@ -1,7 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { DateRangePicker } from 'react-dates'
-import { setTextFilter, sortByDate, sortByAmount, setStartDate, setEndDate } from '../actions/filters'
+import {
+  setTextFilter,
+  sortByDate,
+  sortByAmount,
+  setStartDate,
+  setEndDate,
+} from '../actions/filters'
 
 export class ExpenseListFilters extends React.Component {
   state = {
@@ -14,10 +20,10 @@ export class ExpenseListFilters extends React.Component {
   onFocusChange = (calendarFocused) => {
     this.setState(() => ({ calendarFocused }))
   }
-  onTextChange = e => {
+  onTextChange = (e) => {
     this.props.setTextFilter(e.target.value)
   }
-  onSortChange = e => {
+  onSortChange = (e) => {
     if (e.target.value === 'date') {
       this.props.sortByDate()
     } else if (e.target.value === 'amount') {
@@ -32,10 +38,7 @@ export class ExpenseListFilters extends React.Component {
           value={this.props.filters.text}
           onChange={this.onTextChange}
         />
-        <select
-          value={this.props.filters.sortBy}
-          onChange={this.onSortChange}
-        >
+        <select value={this.props.filters.sortBy} onChange={this.onSortChange}>
           <option value="date">Date</option>
           <option value="amount">Amount</option>
         </select>
@@ -60,15 +63,15 @@ export class ExpenseListFilters extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  filters: state.filters
+  filters: state.filters,
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  setTextFilter: text => dispatch(setTextFilter(text)),
+  setTextFilter: (text) => dispatch(setTextFilter(text)),
   sortByDate: () => dispatch(sortByDate()),
   sortByAmount: () => dispatch(sortByAmount()),
-  setStartDate: startDate => dispatch(setStartDate(startDate)),
-  setEndDate: endDate => dispatch(setEndDate(endDate))
+  setStartDate: (startDate) => dispatch(setStartDate(startDate)),
+  setEndDate: (endDate) => dispatch(setEndDate(endDate)),
 })
 
 // ExpenseListFiltersでpropsにaccessする必要があるのでmapStateToPropsを定義する必要があるが、なければ必要ない

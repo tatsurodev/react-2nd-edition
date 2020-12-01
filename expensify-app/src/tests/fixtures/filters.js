@@ -4,14 +4,14 @@ const filters = {
   text: '',
   sorBy: 'date',
   startDate: undefined,
-  endDate: undefined
+  endDate: undefined,
 }
 
 const altFilters = {
   text: 'bills',
   sortBy: 'amount',
   startDate: moment(0),
-  endDate: moment(0).add(3, 'days')
+  endDate: moment(0).add(3, 'days'),
 }
 
 export { filters, altFilters }

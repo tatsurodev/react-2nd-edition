@@ -24,21 +24,20 @@ const requireAuthentication = (WrappedComponent) => {
   return (props) => (
     <div>
       {/* ternary operator */}
-      {props.isAdmin ?
-        (
-          <WrappedComponent {...props} />
-        ) :
-        (
-          <p>Please login to view the info.</p>
-        )
-      }
+      {props.isAdmin ? (
+        <WrappedComponent {...props} />
+      ) : (
+        <p>Please login to view the info.</p>
+      )}
     </div>
   )
-
 }
 
 const AdminInfo = withAdminWarning(Info)
 const AuthInfo = requireAuthentication(Info)
 
 // ReactDOM.render(<AdminInfo isAdmin={true} info="There are the details" />, document.getElementById('app'))
-ReactDOM.render(<AuthInfo isAdmin={true} info="There are the details" />, document.getElementById('app'))
+ReactDOM.render(
+  <AuthInfo isAdmin={true} info="There are the details" />,
+  document.getElementById('app')
+)

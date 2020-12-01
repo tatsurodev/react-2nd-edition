@@ -8,7 +8,7 @@ import OptionModal from './OptionModal'
 export default class IndecisionApp extends React.Component {
   state = {
     options: [],
-    selectedOption: undefined
+    selectedOption: undefined,
   }
   // 親のstateを子要素から変更させる必要があるので、propsとしてstateを変更するfunctionを渡す
   handleDeleteOptions = () => {
@@ -18,7 +18,9 @@ export default class IndecisionApp extends React.Component {
     this.setState(() => ({ selectedOption: undefined }))
   }
   handleDeleteOption = (optionToRemove) => {
-    this.setState((prevState) => ({ options: prevState.options.filter((option) => option !== optionToRemove) }))
+    this.setState((prevState) => ({
+      options: prevState.options.filter((option) => option !== optionToRemove),
+    }))
     // console.log('hdo', optionToRemove)
   }
   handlePick = () => {
@@ -33,7 +35,9 @@ export default class IndecisionApp extends React.Component {
       return 'This option already exists'
     }
     // pushは破壊的なのでprevStateで使わない
-    this.setState((prevState) => ({ options: prevState.options.concat([option]) }))
+    this.setState((prevState) => ({
+      options: prevState.options.concat([option]),
+    }))
   }
   // lifecycle methodはclass base componentのみ、stateless functional componentにはない機能
   componentDidMount() {
@@ -60,7 +64,7 @@ export default class IndecisionApp extends React.Component {
     console.log('componentWillUnmount!')
   }
   render() {
-    const subtitle = "Put your life in the hands of a computer"
+    const subtitle = 'Put your life in the hands of a computer'
 
     return (
       <div>
@@ -77,9 +81,7 @@ export default class IndecisionApp extends React.Component {
               handleDeleteOptions={this.handleDeleteOptions}
               handleDeleteOption={this.handleDeleteOption}
             />
-            <AddOption
-              handleAddOption={this.handleAddOption}
-            />
+            <AddOption handleAddOption={this.handleAddOption} />
           </div>
         </div>
         <OptionModal

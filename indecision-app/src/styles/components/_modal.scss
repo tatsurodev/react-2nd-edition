@@ -1,42 +1,42 @@
 // ReactModal__Overlayのdomはjsにより急に追加されるのでそれにtransitionを追加するには、.ReactModalPortal > divにopacityを指定しておく必要あり
 .ReactModalPortal > div {
-    opacity: 0;
+  opacity: 0;
 }
 
 .ReactModalPortal .ReactModal__Overlay {
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    transition: opacity 4000ms ease-in-out;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  transition: opacity 4000ms ease-in-out;
 }
 
 // .ReactModalPortal > div {opacity: 0;} → .ReactModal__Overlay--after-open { opacity: 1; }のtransitionが当たっている
 .ReactModalPortal .ReactModal__Overlay--after-open {
-    opacity: 1;
+  opacity: 1;
 }
 
 // ReactModal__Overlayのdomが取り除かれるまで当てられる.ReactModal__Overlay--before-closeにopacityを指定する
 .ReactModalPortal .ReactModal__Overlay--before-close {
-    opacity: 0;
+  opacity: 0;
 }
 
 // react-modalにcustom classNameを付与することでdefaultのstyleが除去される、ここではReactModal__Contentのstyleをなくし、custom className modalを付与して自作のstyleを当てている
 .modal {
-    background: $light-blue;
-    color: white;
-    max-width: 30rem;
-    outline: none;
-    padding: $l-size;
-    text-align: center;
+  background: $light-blue;
+  color: white;
+  max-width: 30rem;
+  outline: none;
+  padding: $l-size;
+  text-align: center;
 }
 
 .modal__title {
-    margin: 0 0 $m-size 0;
+  margin: 0 0 $m-size 0;
 }
 
 .modal__body {
-    font-size: 2rem;
-    font-weight: 300;
-    margin: 0 0 $l-size 0;
-    word-break: break-all;
+  font-size: 2rem;
+  font-weight: 300;
+  margin: 0 0 $l-size 0;
+  word-break: break-all;
 }

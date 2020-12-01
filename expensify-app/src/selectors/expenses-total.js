@@ -3,7 +3,7 @@ export default (expenses) => {
     return 0
   } else {
     return expenses
-      .map(expense => expense.amount)
+      .map((expense) => expense.amount)
       .reduce((sum, value) => sum + value, 0)
   }
 }

@@ -1,19 +1,19 @@
 html {
-    // baseのfont-sizeを便宜的に16px * 62.5% = 10pxとする
-    font-size: 62.5%;
+  // baseのfont-sizeを便宜的に16px * 62.5% = 10pxとする
+  font-size: 62.5%;
 }
 
 body {
-    background: $dark-blue;
-    font-family: Helvertica, Arial, sans-serif;
-    // remを使用して16pxになるようにremを設定
-    font-size: $m-size;
+  background: $dark-blue;
+  font-family: Helvertica, Arial, sans-serif;
+  // remを使用して16pxになるようにremを設定
+  font-size: $m-size;
 }
 
 button {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 button:disabled {
-    cursor: default;
+  cursor: default;
 }

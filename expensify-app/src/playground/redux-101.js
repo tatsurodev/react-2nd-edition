@@ -21,22 +21,22 @@ const incrementCount = (payload = {}) => ({
 // 上記を分割代入と引数のdefault値を使って簡略化
 const incrementCount = ({ incrementBy = 1 } = {}) => ({
   type: 'INCREMENT',
-  incrementBy
+  incrementBy,
 })
 
 const decrementCount = ({ decrementBy = 1 } = {}) => ({
   type: 'DECREMENT',
-  decrementBy
+  decrementBy,
 })
 
 // 引数は必須なのでdefaultを設定しない
 const setCount = ({ count }) => ({
   type: 'SET',
-  count
+  count,
 })
 
 const resetCount = () => ({
-  type: 'RESET'
+  type: 'RESET',
 })
 
 // reducer: actionによってどういう処理を行うかを決定する
@@ -63,19 +63,19 @@ const countReducer = (state = { count: 0 }, action) => {
   switch (action.type) {
     case 'INCREMENT':
       return {
-        count: state.count + action.incrementBy
+        count: state.count + action.incrementBy,
       }
     case 'DECREMENT':
       return {
-        count: state.count - action.decrementBy
+        count: state.count - action.decrementBy,
       }
     case 'SET':
       return {
-        count: action.count
+        count: action.count,
       }
     case 'RESET':
       return {
-        count: 0
+        count: 0,
       }
     default:
       return state
