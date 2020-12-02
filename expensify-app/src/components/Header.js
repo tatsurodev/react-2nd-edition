@@ -1,20 +1,19 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { startLogout } from '../actions/auth'
 
 export const Header = ({ startLogout }) => (
-  <div>
-    <h1>Expensify</h1>
-    {/* active linkは、activeClassNameでcustomize可能(defaultはactive)、Routeと同じくtoと部分一致する時にもactive classが付与されるので、完全一致させる時はexactを使用する */}
-    <NavLink to="/dashboard" activeClassName="is-active">
-      Dashboard
-    </NavLink>
-    <NavLink to="/create" activeClassName="is-active">
-      Create Expense
-    </NavLink>
-    <button onClick={startLogout}>Logout</button>
-  </div>
+  <header className="header">
+    <div className="content-container">
+      <div className="header__content">
+        <Link className="header__title" to="/dashboard">
+          <h1>Expensify</h1>
+        </Link>
+        <button onClick={startLogout}>Logout</button>
+      </div>
+    </div>
+  </header>
 )
 
 const mapDispatchToProps = (dispatch) => ({
