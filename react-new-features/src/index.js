@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import * as serviceWorker from './serviceWorker'
 
 const NoteApp = () => {
-  const [notes, setNotes] = useState([])
+  const notesData = JSON.parse(localStorage.getItem('notes'))
+  const [notes, setNotes] = useState(notesData || [])
   const [title, setTitle] = useState('')
   const [body, setBody] = useState('')
 
@@ -23,6 +24,10 @@ const NoteApp = () => {
   const removeNote = title => {
     setNotes(notes.filter(note => note.title !== title))
   }
+
+  useEffect(() => {
+    localStorage.setItem('notes', JSON.stringify(notes))
+  })
 
   return (
     <div>
@@ -72,6 +77,11 @@ const NoteApp = () => {
 //   // stateは、class componentの際のような{}の形式でなくてもおｋ
 //   const [count, setCount] = useState(props.count)
 //   const [text, setText] = useState('')
+//   // useEffectは、componentDidMountとcomponentDidUpdate(stateとpropsが更新された時)を合わせたようなもの
+//   useEffect(() => {
+//     console.log('useEffect ran')
+//     document.title = count
+//   })
 //   return (
 //     <div>
 //       <p>The current {text || 'count'} is {count}</p>
@@ -88,6 +98,7 @@ const NoteApp = () => {
 // }
 
 ReactDOM.render(
+  // <App count={0} />,
   <NoteApp />,
   document.getElementById('root')
 )
@@ -96,3 +107,4 @@ ReactDOM.render(
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister()
+
