@@ -19,6 +19,7 @@
         "babel-cli": "^6.26.0",
         "babel-loader": "^8.1.0",
         "babel-plugin-transform-class-properties": "^6.24.1",
+        "babel-polyfill": "^6.26.0",
         "css-loader": "^3.5.2",
         "express": "^4.17.1",
         "firebase": "^7.14.4",
