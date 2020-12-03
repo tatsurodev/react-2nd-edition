@@ -11,14 +11,18 @@ export const ExpenseList = (props) => (
       <div className="show-for-desktop">Expense</div>
       <div className="show-for-desktop">Amount</div>
     </div>
-    {props.expenses.length === 0 ? (
-      <p>No expenses</p>
-    ) : (
-      props.expenses.map((expense) => {
-        // jsxの新機能、スプレッド属性(spread attributes): 渡されたobjectのpropertyはcomponentのpropsに一気に渡せる
-        return <ExpenseListItem key={expense.id} {...expense} />
-      })
-    )}
+    <div className="list-body">
+      {props.expenses.length === 0 ? (
+        <div className="list-item list-item--message">
+          <span>No expenses</span>
+        </div>
+      ) : (
+        props.expenses.map((expense) => {
+          // jsxの新機能、スプレッド属性(spread attributes): 渡されたobjectのpropertyはcomponentのpropsに一気に渡せる
+          return <ExpenseListItem key={expense.id} {...expense} />
+        })
+      )}
+    </div>
   </div>
 )
 
