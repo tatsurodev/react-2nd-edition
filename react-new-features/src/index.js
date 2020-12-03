@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom'
 import * as serviceWorker from './serviceWorker'
 
 const NoteApp = () => {
-  const notesData = JSON.parse(localStorage.getItem('notes'))
-  const [notes, setNotes] = useState(notesData || [])
+  const [notes, setNotes] = useState([])
   const [title, setTitle] = useState('')
   const [body, setBody] = useState('')
 
@@ -26,8 +25,15 @@ const NoteApp = () => {
   }
 
   useEffect(() => {
+    const notesData = JSON.parse(localStorage.getItem('notes'))
+    if (notesData) {
+      setNotes(notesData)
+    }
+  }, [])
+
+  useEffect(() => {
     localStorage.setItem('notes', JSON.stringify(notes))
-  })
+  }, [notes])
 
   return (
     <div>
@@ -73,25 +79,30 @@ const NoteApp = () => {
 
 // useStateの引数であるstateをobject形式でなく、個別に値として使用するpattern
 // stateless functional componentは、state, lifecycle methodが使用できなかったが、hooksにより使用できるようになり、functional componentに名称が変わった
-// const App = (props) => {
-//   // stateは、class componentの際のような{}の形式でなくてもおｋ
-//   const [count, setCount] = useState(props.count)
-//   const [text, setText] = useState('')
-//   // useEffectは、componentDidMountとcomponentDidUpdate(stateとpropsが更新された時)を合わせたようなもの
-//   useEffect(() => {
-//     console.log('useEffect ran')
-//     document.title = count
-//   })
-//   return (
-//     <div>
-//       <p>The current {text || 'count'} is {count}</p>
-//       <button onClick={() => setCount(count - 1)}>-1</button>
-//       <button onClick={() => setCount(props.count)}>Reset</button>
-//       <button onClick={() => setCount(count + 1)}>+1</button>
-//       <input value={text} onChange={e => setText(e.target.value)} />
-//     </div>
-//   )
-// }
+const App = (props) => {
+  // stateは、class componentの際のような{}の形式でなくてもおｋ
+  const [count, setCount] = useState(props.count)
+  const [text, setText] = useState('')
+  // useEffectは、componentDidMountとcomponentDidUpdate(stateとpropsが更新された時)を合わせたようなもの
+  // useEffectは何個も実行できるのでclass based componentのlifecycle methodのように関連性のないものが一箇所にごっちゃに成ることがない
+  useEffect(() => {
+    console.log('This should only run once!')
+    // depends on nothingの状態でcomponentDidMountの時1回だけ実行させる
+  }, [])
+  useEffect(() => {
+    console.log('useEffect ran')
+    document.title = count
+  }, [count])
+  return (
+    <div>
+      <p>The current {text || 'count'} is {count}</p>
+      <button onClick={() => setCount(count - 1)}>-1</button>
+      <button onClick={() => setCount(props.count)}>Reset</button>
+      <button onClick={() => setCount(count + 1)}>+1</button>
+      <input value={text} onChange={e => setText(e.target.value)} />
+    </div>
+  )
+}
 
 // App.defaultProps = {
 //   count: 0,
