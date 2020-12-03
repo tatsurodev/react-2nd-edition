@@ -39,11 +39,7 @@ const NoteApp = () => {
     <div>
       <h1>Notes</h1>
       {notes.map(note => (
-        <div key={note.title}>
-          <h3>{note.title}</h3>
-          <p>{note.body}</p>
-          <button onClick={() => removeNote(note.title)}>x</button>
-        </div>
+        <Note key={note.title} note={note} removeNote={removeNote} />
       ))}
       <p>Add note</p>
       <form onSubmit={addNote}>
@@ -51,6 +47,25 @@ const NoteApp = () => {
         <textarea value={body} onChange={e => setBody(e.target.value)}></textarea>
         <button>Add note</button>
       </form>
+    </div>
+  )
+}
+
+const Note = ({ note, removeNote }) => {
+  useEffect(() => {
+    console.log('Setting up effect!')
+    // useEffectの引数である関数の中で関数を返すとcomponentWillUnmountのtimingで実行される
+    return () => {
+      console.log('Cleaning up effect!')
+    }
+    // dependenciesを明記しないと,親要素のNoteAppのnote.title, note.bodyが更新される度rerenderされ、子componentのNoteもrerenderされるのでここのuseEffectが実行されてしまうので注意
+  }, [])
+
+  return (
+    <div>
+      <h3>{note.title}</h3>
+      <p>{note.body}</p>
+      <button onClick={() => removeNote(note.title)}>x</button>
     </div>
   )
 }
